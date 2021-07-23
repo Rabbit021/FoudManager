@@ -9,7 +9,7 @@ namespace FundManager.Services
     {
         public void Process(IEnumerable<FundDetail> fundDetails)
         {
-            var lst = JToken.FromObject(fundDetails);
+            var lst = JToken.FromObject(fundDetails) +"";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FundManager.Interface;
 using FundManager.Model;
@@ -8,8 +9,13 @@ using Newtonsoft.Json.Linq;
 
 namespace FundManager.Services
 {
-    public class FundService :IFindService
+    public class FundService : IFindService
     {
+        private Dictionary<FundType, int> PercentDict = new Dictionary<FundType, int>()
+        {
+            {FundType.jjcc,6 },
+            {FundType.zqcc,3 }
+        };
         public FundDetail GetFundDetail(string code)
         {
             var url = $"http://fund.eastmoney.com/pingzhongdata/{code}.js";
@@ -37,34 +43,57 @@ namespace FundManager.Services
             detail.bondPercent = bond;
             detail.cashPercent = cash;
             // top10持仓
-            detail.Top10 = GetTop10(code);
+            detail.Top10 = GetTop10(code, FundType.jjcc);
+            detail.BondTop10 = GetTop10(code, FundType.zqcc);
 
             return detail;
         }
 
-        private IEnumerable<FundTop10> GetTop10(string code)
+        /// <summary>
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="type">zqcc 债券,jjcc 股票</param>
+        /// <returns></returns>
+        private IEnumerable<FundTop10> GetTop10(string code, FundType type)
         {
-            //    https://fundf10.eastmoney.com/FundArchivesDatas.aspx?type=zqcc&code=165808&year=&rt=0.22589432610855598
-            var address = "http://fundf10.eastmoney.com/FundArchivesDatas.aspx?type=jjcc&topline=10&year=&month=";
-            var url = $"{address}&code={code}";
+            var baseUrl = "https://fundf10.eastmoney.com/FundArchivesDatas.aspx";
+
+            var dict = new Dictionary<string, string>();
+            dict["code"] = code;
+            dict["type"] = type + "";
+            dict["year"] = "";
+            dict["topline"] = "100";
+            dict["rt"] = $"0.{DateTime.Now.Ticks}";
+
+            var queryString = string.Join("&", dict.Select(x => $"{x.Key}={x.Value}"));
+            var url = $"{baseUrl}?{queryString}";
             var web = new HtmlWeb();
             var document = web.Load(url);
-            var table = document.DocumentNode.SelectNodes("//table").FirstOrDefault();
+            var tables = document.DocumentNode.SelectNodes("//table");
+            if (tables == null) return new List<FundTop10>();
+            var table = tables.FirstOrDefault();
             var tbody = table.SelectNodes("//tbody").FirstOrDefault();
             var trList = tbody.ChildNodes;
 
             var lst = new List<FundTop10>();
+
+            PercentDict.TryGetValue(type, out var index);
             foreach (var tr in trList)
             {
                 var tds = tr.ChildNodes;
                 var top = new FundTop10();
-
                 top.Code = tds[1].InnerText;
                 top.Name = tds[2].InnerText;
-                top.Percent = double.Parse(tds[6].InnerText.Replace("%", ""));
+                top.Percent = double.Parse(tds[index].InnerText.Replace("%", ""));
                 lst.Add(top);
             }
             return lst;
         }
+    }
+
+    public enum FundType
+    {
+        zqcc,
+        jjcc
     }
 }

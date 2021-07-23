@@ -18,10 +18,19 @@ namespace FundManager.Model
             }
         }
 
+        public double bondTopPercent
+        {
+            get
+            {
+                return Math.Round(Top10.Sum(x => x.Percent), 2);
+            }
+        }
+
         public double stockPercent { get; set; }
         public double bondPercent { get; set; }
         public double cashPercent { get; set; }
 
         public IEnumerable<FundTop10> Top10 { get; set; }
+        public IEnumerable<FundTop10> BondTop10 { get; set; }
     }
 }
