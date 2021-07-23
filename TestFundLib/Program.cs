@@ -11,7 +11,7 @@ namespace TestFundLib
             var service = new FundFundFindService();
             var codes = new string[]
             {
-                    "001938"
+                "159928"
             };
             var lst = service.GetFundDetailList(codes);
 

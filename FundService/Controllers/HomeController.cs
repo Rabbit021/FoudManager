@@ -21,6 +21,7 @@ namespace FundService.Controllers
             _fundFind = fundFind;
         }
 
+        [ResponseCache(Duration = 600)]
         public IActionResult Index()
         {
             var codes = new[]
@@ -50,7 +51,7 @@ namespace FundService.Controllers
             return View(lst);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.Client, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
