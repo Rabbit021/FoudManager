@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace FundManager.Services
+namespace FundLib.Services
 {
     public class WebManager
     {

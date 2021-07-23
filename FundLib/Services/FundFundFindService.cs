@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FundManager.Interface;
-using FundManager.Model;
+using FundLib.Interface;
+using FundLib.Model;
 using HtmlAgilityPack;
 using Jint;
 using Newtonsoft.Json.Linq;
 
-namespace FundManager.Services
+namespace FundLib.Services
 {
-    public class FundService : IFindService
+    /// <summary>
+    /// 天天获取基金详情
+    /// </summary>
+    public class FundFundFindService : IFundFindService
     {
         private Dictionary<FundType, int> PercentDict = new Dictionary<FundType, int>()
         {
             {FundType.jjcc,6 },
             {FundType.zqcc,3 }
         };
-        public FundDetail GetFundDetail(string code)
+
+        public IEnumerable<FundDetail> GetFundDetailList(IEnumerable<string> codes)
+        {
+            var lst = codes.AsParallel().Select(x => GetFundDetail(x));
+            return lst;
+        }
+
+        private FundDetail GetFundDetail(string code)
         {
             var url = $"http://fund.eastmoney.com/pingzhongdata/{code}.js";
             var content = WebManager.Get(url);

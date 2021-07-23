@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using FundManager.Interface;
-using FundManager.Model;
+using FundLib.Interface;
+using FundLib.Model;
 using Newtonsoft.Json.Linq;
 
-namespace FundManager.Services
+namespace FundLib.Services
 {
     public class ProcessService : IPrcessData
     {

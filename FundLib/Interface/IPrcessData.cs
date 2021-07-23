@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using FundManager.Model;
+using FundLib.Model;
 
-namespace FundManager.Interface
+namespace FundLib.Interface
 {
     public interface IPrcessData
     {

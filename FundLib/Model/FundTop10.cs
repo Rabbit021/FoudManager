@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace FundManager.Model
+﻿namespace FundLib.Model
 {
     public class FundTop10
     {
