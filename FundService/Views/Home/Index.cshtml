@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<FundLib.Model.FundDetail>
 @{
     ViewData["Title"] = "基金小工具";
+    var modelOrdered = Model.OrderByDescending(m => m.assets);
 }
 <p>
     <a asp-action="Export">导出</a>
@@ -8,32 +9,32 @@
 <table class="table">
     <thead>
         <tr>
-            <th>代码</th>
-            <th>名称</th>
-            <th>规模</th>
-            <th>股票比例</th>
-            <th>债券比例</th>
-            <th>现金比例</th>
+            <th><a>代码</a></th>
+            <th><a>名称</a></th>
+            <th><a>规模(亿元)</a></th>
+            <th><a>股票比例(%)</a></th>
+            <th><a>债券比例(%)</a></th>
+            <th><a>现金比例(%)</a></th>
 
-            <th>重仓股票比例</th>
-            <th>重仓债券比例</th>
+            <th>重仓股票比例(%)</th>
+            <th>重仓债券比例(%)</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in modelOrdered)
         {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.code)</td>
-            <td>@Html.DisplayFor(modelItem => item.name)</td>
-            <td>@Html.DisplayFor(modelItem => item.assets)</td>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.code)</td>
+                <td>@Html.DisplayFor(modelItem => item.name)</td>
+                <td>@Html.DisplayFor(modelItem => item.assets)</td>
 
-            <td>@Html.DisplayFor(modelItem => item.stockPercent)</td>
-            <td>@Html.DisplayFor(modelItem => item.bondPercent)</td>
-            <td>@Html.DisplayFor(modelItem => item.cashPercent)</td>
+                <td>@Html.DisplayFor(modelItem => item.stockPercent)</td>
+                <td>@Html.DisplayFor(modelItem => item.bondPercent)</td>
+                <td>@Html.DisplayFor(modelItem => item.cashPercent)</td>
 
-            <td>@Html.DisplayFor(modelItem => item.topPercent)</td>
-            <td>@Html.DisplayFor(modelItem => item.bondTopPercent)</td>
-        </tr>
+                <td>@Html.DisplayFor(modelItem => item.topPercent)</td>
+                <td>@Html.DisplayFor(modelItem => item.bondTopPercent)</td>
+            </tr>
         }
     </tbody>
 </table>

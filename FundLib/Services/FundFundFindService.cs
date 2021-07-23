@@ -47,10 +47,10 @@ namespace FundLib.Services
             var bond = (double)asset.SelectToken($"series[1].data[{last}]");
             var cash = (double)asset.SelectToken($"series[2].data[{last}]");
 
-            // 申购赎回
-            asset = JObject.FromObject(engine.GetValue("Data_buySedemption").ToObject());
+            // 规模变化
+            asset = JObject.FromObject(engine.GetValue("Data_fluctuationScale").ToObject());
             // 资产
-            var assets = (double)asset.SelectToken($"series[2].data[{last}]");
+            var assets = (double)asset.SelectToken($"series").LastOrDefault().SelectToken("y");
 
             detail.lastTime = lastTime;
             detail.code = code;
