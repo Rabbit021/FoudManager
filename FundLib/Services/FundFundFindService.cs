@@ -38,17 +38,25 @@ namespace FundLib.Services
             var asset = JObject.FromObject(engine.GetValue("Data_assetAllocation").ToObject());
             var detail = new FundDetail();
             // 时间
-            var categories = asset.SelectToken("categories") as JArray;
-            var lastTime = categories.LastOrDefault().ToObject<string>();
+            var categories = asset.SelectToken("categories") as JArray ?? new JArray();
+            var last = categories.Count - 1;
+            var lastTime = categories[last] + "";
+
             // 比例
-            var series = asset.SelectToken("series") as JArray;
-            var stock = series[0].SelectToken("data").LastOrDefault().ToObject<double>();
-            var bond = series[1].SelectToken("data").LastOrDefault().ToObject<double>();
-            var cash = series[2].SelectToken("data").LastOrDefault().ToObject<double>();
+            var stock = (double)asset.SelectToken($"series[0].data[{last}]");
+            var bond = (double)asset.SelectToken($"series[1].data[{last}]");
+            var cash = (double)asset.SelectToken($"series[2].data[{last}]");
+
+            // 申购赎回
+            asset = JObject.FromObject(engine.GetValue("Data_buySedemption").ToObject());
+            // 资产
+            var assets = (double)asset.SelectToken($"series[2].data[{last}]");
 
             detail.lastTime = lastTime;
             detail.code = code;
             detail.name = name;
+            detail.assets = assets;
+
             detail.stockPercent = stock;
             detail.bondPercent = bond;
             detail.cashPercent = cash;

@@ -23,7 +23,30 @@ namespace FundService.Controllers
 
         public IActionResult Index()
         {
-            var lst = _fundFind.GetFundDetailList(new[] { "001938" });
+            var codes = new[]
+            {
+                "001679",
+                "003095",
+                "000596",
+                "161903",
+                "005402",
+                "005106",
+                "005939",
+                "002190",
+                "161725",
+                "519674",
+                "320007",
+                "003634",
+                "009273",
+                "000961",
+                "008281",
+                "050026",
+                "000913",
+                "003096",
+                "260108",
+                "004224"
+            };
+            var lst = _fundFind.GetFundDetailList(codes);
             return View(lst);
         }
 
@@ -33,5 +56,12 @@ namespace FundService.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public IActionResult Export()
+        {
+            // TODO
+            // 下载Excel
+            var bytes = new byte[0];
+            return new FileContentResult(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
     }
 }
