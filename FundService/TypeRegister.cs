@@ -11,7 +11,7 @@ namespace FundService
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ProcessService>().As<IPrcessData>().SingleInstance();
-            builder.RegisterType<FundFindService>().As<IFindService>().SingleInstance();
+            builder.RegisterType<FundFundFindService>().As<IFundFindService>().SingleInstance();
         }
     }
 }
