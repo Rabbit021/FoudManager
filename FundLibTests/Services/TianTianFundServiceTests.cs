@@ -52,5 +52,21 @@ namespace FundLib.Services.Tests
             var lst = service.GetFundMNSectorAllocation(code);
             Console.WriteLine(lst.AsJObject());
         }
+
+        [TestMethod()]
+        public void GetFundMNShareScaleListTest()
+        {
+            var service = GetService();
+            var lst = service.GetFundMNShareScaleList(code);
+            Console.WriteLine(lst.AsJObject());
+        }
+
+        [TestMethod()]
+        public void GetFundMNAssetsListTest()
+        {
+            var service = GetService();
+            var lst = service.GetFundMNAssetsList(code);
+            Console.WriteLine(lst.AsJObject());
+        }
     }
 }

@@ -98,4 +98,44 @@ namespace FundLib.Model.TianTian
         public string zjzbl { get; set; } // 持仓比例
         public string fsrq { get; set; }  // 持仓时间
     }
+
+    /// <summary>
+    ///  持仓变化
+    /// </summary>
+    public class FundMNShareScaleList
+    {
+        public string fsrq { get; set; }
+        public string qjsg { get; set; }
+        public string qjsh { get; set; }
+        public string qmzfe { get; set; }
+        public string zfebdl { get; set; }
+        public string jsg { get; set; }
+        public string qczfe { get; set; }
+    }
+
+    /// <summary>
+    ///  净资产变化
+    /// </summary>
+    public class FundMNAssetsList
+    {
+        public string fsrq { get; set; }
+        public string netnav { get; set; }
+        public string change { get; set; }
+        public string issum { get; set; }
+    }
+
+    /// <summary>
+    /// 涨幅
+    /// </summary>
+    public class FundMNPeriodIncrease
+    {
+        //周：Z; 月：Y,3Y,6Y; 年:1N，2N，3N，5N，JN
+        public string title { get; set; } // 标题
+        public string syl { get; set; }  // 涨跌幅
+        public string avg { get; set; }  // 通了平均值
+        public string hs300 { get; set; } // 沪深300
+        public string rank { get; set; } // 通了排名
+        public string sc { get; set; }   // 排名总数
+        public string diff { get; set; }  //
+    }
 }

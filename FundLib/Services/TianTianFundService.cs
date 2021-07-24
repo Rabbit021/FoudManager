@@ -18,7 +18,6 @@ namespace FundLib.Services
             return null;
         }
 
-
         private FundDetail GetFundDetail(string code)
         {
             GetFundMNDetailInformation(code);
@@ -78,6 +77,25 @@ namespace FundLib.Services
             return rst;
         }
 
+        public List<FundMNShareScaleList> GetFundMNShareScaleList(string code)
+        {
+            var fun = "/FundMNewApi/FundMNShareScaleList";
+            var rst = GetTiantianDatas<List<FundMNShareScaleList>>(fun, code);
+            return rst;
+        } 
+
+        public List<FundMNAssetsList> GetFundMNAssetsList(string code)
+        {
+            var fun = "/FundMNewApi/FundMNAssetsList";
+            var rst = GetTiantianDatas<List<FundMNAssetsList>>(fun, code);
+            return rst;
+        }
+
+        public FundMNPeriodIncrease GetFundMNPeriodIncrease(string code)
+        {
+
+        }
+
         #endregion
 
         #region 基础方法
@@ -118,6 +136,4 @@ namespace FundLib.Services
         }
         #endregion
     }
-
-
 }
