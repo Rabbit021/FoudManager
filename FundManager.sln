@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundService", "FundService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundLib", "FundLib\FundLib.csproj", "{C15E2779-C2A0-4B32-A54B-735682048D39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundLibTests", "FundLibTests\FundLibTests.csproj", "{AB69FF01-AE49-441B-914D-57A414D68B6E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFundLib", "TestFundLib\TestFundLib.csproj", "{0F2A3672-3B0F-4AA7-9C2B-47ACB3F7767C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundLibTests", "FundLibTests\FundLibTests.csproj", "{AB69FF01-AE49-441B-914D-57A414D68B6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{AB69FF01-AE49-441B-914D-57A414D68B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB69FF01-AE49-441B-914D-57A414D68B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB69FF01-AE49-441B-914D-57A414D68B6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0F2A3672-3B0F-4AA7-9C2B-47ACB3F7767C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F2A3672-3B0F-4AA7-9C2B-47ACB3F7767C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F2A3672-3B0F-4AA7-9C2B-47ACB3F7767C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F2A3672-3B0F-4AA7-9C2B-47ACB3F7767C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

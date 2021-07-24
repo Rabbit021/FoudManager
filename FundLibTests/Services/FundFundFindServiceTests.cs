@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FundLib.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FundLib.Services;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FundLib.Services.Tests
+namespace FundLibTests.Services
 {
     [TestClass()]
-    public class FundFundFindServiceTests
+    public class FundFundFindServiceTests : UnitTestBase
     {
         [TestMethod()]
         public void GetFundDetailListTest()

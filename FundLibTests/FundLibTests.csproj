@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.17" />
+    <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.17" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
@@ -15,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FundLib\FundLib.csproj" />
+    <ProjectReference Include="..\FundService\FundService.csproj" />
   </ItemGroup>
 
 </Project>

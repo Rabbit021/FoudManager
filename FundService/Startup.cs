@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using FundLib;
 
 namespace FundService
 {
@@ -16,6 +14,7 @@ namespace FundService
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            PublicDatas.Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
@@ -38,6 +37,8 @@ namespace FundService
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            PublicDatas.ServiceProvider = app.ApplicationServices;
+            PublicDatas.Container = app.ApplicationServices.GetAutofacRoot();
             app.UseStaticFiles();
             app.UseResponseCaching();
             app.UseRouting();

@@ -107,6 +107,13 @@ namespace FundLib.Services
             }
             return lst;
         }
+
+        public void GetRnad()
+        {
+            var time = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
+            var url = $"http://api.fund.eastmoney.com/f10/HYPZ/?fundCode=000248&year=&callback=jQuery183015063983370739065_{time}&_={time}";
+            var rst = WebManager.Get(url);
+        }
     }
 
     public enum FundType
