@@ -138,4 +138,20 @@ namespace FundLib.Model.TianTian
         public string sc { get; set; }   // 排名总数
         public string diff { get; set; }  //
     }
+
+    /// <summary>
+    /// 特色数据
+    /// </summary>
+    public class FundMNUniqueInfo
+    {
+        public double SHARP1 { get; set; }
+        
+        // 百分数
+        public double STDDEV1 { get; set; }
+        public double MAXRETRA3 { get; set; }
+        public double PROFIT_Y { get; set; }
+        public double PROFIT_3Y { get; set; }
+        public double PROFIT_6Y { get; set; }
+        public double PROFIT_1N { get; set; }
+    }
 }

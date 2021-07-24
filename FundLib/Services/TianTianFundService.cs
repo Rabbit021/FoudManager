@@ -24,7 +24,7 @@ namespace FundLib.Services
             return null;
         }
 
-        #region 天天基金App数据接口
+        #region 天天基金App数据接口 Get
 
         /// <summary>
         /// 获取基金概况
@@ -62,6 +62,7 @@ namespace FundLib.Services
                 // ETF 重仓替换
                 var etf = GetFundMNInverstPosition(rst.etfcode);
             }
+
             return rst;
         }
 
@@ -77,13 +78,23 @@ namespace FundLib.Services
             return rst;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public List<FundMNShareScaleList> GetFundMNShareScaleList(string code)
         {
             var fun = "/FundMNewApi/FundMNShareScaleList";
             var rst = GetTiantianDatas<List<FundMNShareScaleList>>(fun, code);
             return rst;
-        } 
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public List<FundMNAssetsList> GetFundMNAssetsList(string code)
         {
             var fun = "/FundMNewApi/FundMNAssetsList";
@@ -91,14 +102,40 @@ namespace FundLib.Services
             return rst;
         }
 
-        public FundMNPeriodIncrease GetFundMNPeriodIncrease(string code)
+        public List<FundMNPeriodIncrease> GetFundMNPeriodIncrease(string code)
         {
+            var fun = "/FundMNewApi/FundMNPeriodIncrease";
+            var rst = GetTiantianDatas<List<FundMNPeriodIncrease>>(fun, code);
+            return rst;
+        }
 
+        #endregion
+
+        #region 天天基金App数据接口 Post
+
+        public FundMNUniqueInfo PostFundMNUniqueInfo(string code)
+        {
+            var fun = "/FundMNewApi/FundMNUniqueInfo";
+            var rst = PostTiantianDatas<FundMNUniqueInfo>(fun, code);
+            return rst;
         }
 
         #endregion
 
         #region 基础方法
+
+        private T PostTiantianDatas<T>(string path, string code)
+        {
+            var fundapi = "https://fundmobapi.eastmoney.com";
+
+            var dict = GetQueryParamDict();
+            dict["FCODE"] = code;
+            var url = $"{fundapi}{path}";
+            var json = WebManager.Post(url, dict);
+            var rst = json.As<T>("Datas");
+            return rst;
+        }
+
         private T GetTiantianDatas<T>(string path, string code)
         {
             var query = new Dictionary<string, string>();
@@ -116,8 +153,10 @@ namespace FundLib.Services
         /// <returns></returns>
         private string GetUrl(string path, IDictionary<string, string> query = null)
         {
-            var fundapi = "https://fundmobapi.eastmoney.com/";
-            var url = $"{fundapi}{path}?{GetQueryParamDict(query)}";
+            var fundapi = "https://fundmobapi.eastmoney.com";
+            var dict = GetQueryParamDict(query);
+            var queryString = string.Join('&', dict.Select(x => $"{x.Key}={x.Value}"));
+            var url = $"{fundapi}{path}?{queryString}";
             return url;
         }
 
@@ -125,14 +164,13 @@ namespace FundLib.Services
         /// 获取查询字符串地址
         /// </summary>
         /// <returns></returns>
-        private string GetQueryParamDict(IDictionary<string, string> query = null)
+        private Dictionary<string, string> GetQueryParamDict(IDictionary<string, string> query = null)
         {
             var dict = PublicDatas.Resolve<Dictionary<string, string>>("TianTianParam");
             query ??= new Dictionary<string, string>();
             foreach (var itr in query)
                 dict[itr.Key] = itr.Value;
-            var queryString = string.Join('&', dict.Select(x => $"{x.Key}={x.Value}"));
-            return queryString;
+            return dict;
         }
         #endregion
     }

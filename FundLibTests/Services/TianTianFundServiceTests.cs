@@ -68,5 +68,21 @@ namespace FundLib.Services.Tests
             var lst = service.GetFundMNAssetsList(code);
             Console.WriteLine(lst.AsJObject());
         }
+
+        [TestMethod()]
+        public void PostFundMNUniqueInfoTest()
+        {
+            var service = GetService();
+            var lst = service.PostFundMNUniqueInfo(code);
+            Console.WriteLine(lst.AsJObject());
+        }
+
+        [TestMethod()]
+        public void GetFundMNPeriodIncreaseTest()
+        {
+            var service = GetService();
+            var lst = service.GetFundMNPeriodIncrease(code);
+            Console.WriteLine(lst.AsJObject());
+        }
     }
 }
