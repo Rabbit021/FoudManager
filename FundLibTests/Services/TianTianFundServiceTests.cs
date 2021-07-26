@@ -11,7 +11,8 @@ namespace FundLib.Services.Tests
     [TestClass()]
     public class TianTianFundServiceTests : UnitTestBase
     {
-        private string code = "000248";
+        //private string code = "000248";
+        private string code = "008281";
 
         private static TianTianFundService GetService()
         {

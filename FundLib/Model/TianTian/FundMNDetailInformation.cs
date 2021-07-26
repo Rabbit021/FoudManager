@@ -61,7 +61,7 @@ namespace FundLib.Model.TianTian
 
         [JsonConverter(typeof(String2DoubleConverter))]
         [JsonProperty("JJ")]
-        public double? fundPercent { get; set; }
+        public double fundPercent { get; set; }
 
         [JsonConverter(typeof(String2DoubleConverter))]
         [JsonProperty("JZC")]
