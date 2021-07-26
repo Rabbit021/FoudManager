@@ -51,6 +51,7 @@ namespace FundService.Controllers
                 codes = _commonService.ReadCodes(file).Select(x => x.code).ToList();
             var lst = _commonService.GetFundList(codes);
             var bytes = _commonService.AsExcel(lst);
+
             return new FileContentResult(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             {
                 FileDownloadName = $"基金统计-{DateTime.Now.ToShortDateString()}.xlsx"

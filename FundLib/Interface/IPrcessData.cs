@@ -5,6 +5,6 @@ namespace FundLib.Interface
 {
     public interface IPrcessData
     {
-        public void Process(IEnumerable<FundDetail> fundDetails);
+        public FundSummary Process(IEnumerable<FundDetail> fundDetails);
     }
 }

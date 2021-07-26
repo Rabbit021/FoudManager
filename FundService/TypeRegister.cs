@@ -59,6 +59,8 @@ namespace FundService
                 .ForMember(x => x.Code, opt => opt.MapFrom(x => x.hymc))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.hymc))
                 .ForMember(x => x.Percent, opt => opt.MapFrom(x => x.zjzbl));
+
+            CreateMap<FundTop10, SummaryItem>();
         }
     }
 }

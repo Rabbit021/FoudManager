@@ -15,9 +15,11 @@ namespace FundService.Services
     public class CommonService
     {
         private readonly IFundFindService _fundFind;
-        public CommonService(IFundFindService fundService)
+        private readonly IPrcessData _prcessData;
+        public CommonService(IFundFindService fundService, IPrcessData prcessData)
         {
             _fundFind = fundService;
+            _prcessData = prcessData;
         }
 
         public List<FundDetail> GetFundList(IEnumerable<string> codes)
@@ -103,11 +105,24 @@ namespace FundService.Services
                         // 更新行索引
                         row++;
                     }
+
+                    row+=3;
+
+                    // 统计数据
+                    var summary = _prcessData.Process(lst);
+                    foreach (var itr in summary.StockItems)
+                    {
+                        worksheet.Cells[row, 1].Value = itr.Code;
+                        worksheet.Cells[row, 2].Value = itr.Name;
+                        row++;
+                    }
+
                     package.Save();
                 }
                 var datas = mem.ToArray();
                 return datas;
             }
         }
+
     }
 }
