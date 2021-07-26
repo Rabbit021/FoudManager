@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FundLib.Interface;
 using FundLib.Model;
 using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using FundLib.Extensions;
 using FundLib.Model.TianTian;
 using Newtonsoft.Json;
@@ -11,17 +14,44 @@ namespace FundLib.Services
 {
     public class TianTianFundService : IFundFindService
     {
+        private IMapper mapper;
+        public TianTianFundService()
+        {
+            mapper = PublicDatas.Resolve<IMapper>();
+        }
         public IEnumerable<FundDetail> GetFundDetailList(IEnumerable<string> codes)
         {
-            foreach (var itr in codes)
-                GetFundDetail(itr);
-            return null;
+            var taskList = codes.Select(code => Task.Run(() => GetFundDetail(code)));
+            Task.WaitAll(taskList.ToArray());
+            var lst = taskList.Select(x => x.Result);
+            return lst;
         }
 
-        private FundDetail GetFundDetail(string code)
+        public FundDetail GetFundDetail(string code)
         {
-            GetFundMNDetailInformation(code);
-            return null;
+            var detail = new FundDetail();
+            var baseInfo = GetFundMNDetailInformation(code);
+            var postSummary = GetFundMNAssetAllocationNew(code);
+            var postion = GetFundMNInverstPosition(code); // 个股持仓
+            var sector = GetFundMNSectorAllocation(code); // 行业持仓
+
+
+            // 基础数据
+            detail.code = code;
+            detail.name = baseInfo.shortname;
+            detail.ftype = baseInfo.ftype;
+            detail.assets = Math.Round((double)postSummary.nav, 2);
+            detail.stockPercent = postSummary.stockPercent;
+            detail.bondPercent = postSummary.bondPercent;
+            detail.cashPercent = postSummary.cashPercent;
+            detail.otherPercent = postSummary.otherPercent;
+
+            // TODO 需要注意ETF链接基金持股计算
+            // 持仓数据
+            detail.Top10 = postion.fundStocks.Select(x => mapper.Map<FundTop10>(x));
+            detail.BondTop10 = postion.fundboods.Select(x => mapper.Map<FundTop10>(x)); ;
+            // 行业数据
+            return detail;
         }
 
         #region 天天基金App数据接口 Get

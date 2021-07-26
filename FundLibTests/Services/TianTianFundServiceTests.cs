@@ -84,5 +84,13 @@ namespace FundLib.Services.Tests
             var lst = service.GetFundMNPeriodIncrease(code);
             Console.WriteLine(lst.AsJObject());
         }
+
+        [TestMethod()]
+        public void GetFundDetailTest()
+        {
+            var service = GetService();
+            var lst = service.GetFundDetail(code);
+            Console.WriteLine(lst.AsJObject());
+        }
     }
 }

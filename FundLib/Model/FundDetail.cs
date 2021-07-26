@@ -8,29 +8,35 @@ namespace FundLib.Model
     {
         public string code { get; set; }
         public string name { get; set; }
+        public string ftype { get; set; }
         public string lastTime { get; set; }
-        public double assets { get; set; } // 净资产
+        public double? assets { get; set; } // 净资产
+
 
         // 重仓比例
-        public double topPercent
+        public double? topPercent
         {
             get
             {
-                return Math.Round(Top10.Sum(x => x.Percent), 2);
+                var sum = Top10.Where(x => x.Percent != null).Sum(x => (double)x.Percent);
+                return Math.Round(sum);
             }
         }
-        public double bondTopPercent
+        public double? bondTopPercent
         {
             get
             {
-                return Math.Round(BondTop10.Sum(x => x.Percent), 2);
+                var sum = BondTop10.Where(x => x.Percent != null).Sum(x => (double)x.Percent);
+                return Math.Round(sum);
             }
         }
 
         // 资产分配
-        public double stockPercent { get; set; }
-        public double bondPercent { get; set; }
-        public double cashPercent { get; set; }
+        public double? stockPercent { get; set; }
+        public double? bondPercent { get; set; }
+        public double? cashPercent { get; set; }
+        public double? otherPercent { get; set; }
+
 
         // 重仓明显
         public IEnumerable<FundTop10> Top10 { get; set; }

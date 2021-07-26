@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FundLib.Interface;
 using FundLib.Model;
 using HtmlAgilityPack;
@@ -12,6 +13,7 @@ namespace FundLib.Services
     /// <summary>
     /// 天天获取基金详情
     /// </summary>
+    [System.Obsolete("Replace TianTianFundService")]
     public class FundFundFindService : IFundFindService
     {
         private Dictionary<FundType, int> PercentDict = new Dictionary<FundType, int>()
@@ -22,7 +24,9 @@ namespace FundLib.Services
 
         public IEnumerable<FundDetail> GetFundDetailList(IEnumerable<string> codes)
         {
-            var lst = codes.AsParallel().Select(x => GetFundDetail(x));
+            var taskList = codes.Select(code => Task<FundDetail>.Factory.StartNew(() => GetFundDetail(code)));
+            Task.WaitAll(taskList.ToArray());
+            var lst = taskList.Select(x => x.Result);
             return lst;
         }
 
@@ -43,14 +47,14 @@ namespace FundLib.Services
             var lastTime = categories[last] + "";
 
             // 比例
-            var stock = (double)asset.SelectToken($"series[0].data[{last}]");
-            var bond = (double)asset.SelectToken($"series[1].data[{last}]");
-            var cash = (double)asset.SelectToken($"series[2].data[{last}]");
+            var stock = (double?)asset.SelectToken($"series[0].data[{last}]");
+            var bond = (double?)asset.SelectToken($"series[1].data[{last}]");
+            var cash = (double?)asset.SelectToken($"series[2].data[{last}]");
 
             // 规模变化
             asset = JObject.FromObject(engine.GetValue("Data_fluctuationScale").ToObject());
             // 资产
-            var assets = (double)asset.SelectToken($"series").LastOrDefault().SelectToken("y");
+            var assets = (double?)asset.SelectToken($"series").LastOrDefault().SelectToken("y");
 
             detail.lastTime = lastTime;
             detail.code = code;
@@ -106,13 +110,6 @@ namespace FundLib.Services
                 lst.Add(top);
             }
             return lst;
-        }
-
-        public void GetRnad()
-        {
-            var time = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000;
-            var url = $"http://api.fund.eastmoney.com/f10/HYPZ/?fundCode=000248&year=&callback=jQuery183015063983370739065_{time}&_={time}";
-            var rst = WebManager.Get(url);
         }
     }
 

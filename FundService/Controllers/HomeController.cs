@@ -47,7 +47,7 @@ namespace FundService.Controllers
                 "260108",
                 "004224"
             };
-            var lst = _fundFind.GetFundDetailList(codes);
+            var lst = _fundFind.GetFundDetailList(codes).OrderBy(x => x.ftype).ThenBy(x => x.assets).ToList();
             return View(lst);
         }
 
