@@ -3,25 +3,9 @@
     ViewData["Title"] = "基金小工具";
 }
 
-<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="UpdLoad">
-    <div>
-        <div>
-            <p>上传excel:</p>
-            <input type="file" class="btn-secondary" name="files" />
-            <input type="submit" class="btn-secondary" value="上传" />
-        </div>
-    </div>
-</form>
-
-<form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Export">
-    <div>
-        <div>
-            <p>输入代码:</p>
-            <input type="file" class="btn-secondary" name="files" />
-            <input type="submit" class="btn-secondary" value="导出" />
-        </div>
-    </div>
-</form>
+<p>
+    <a asp-action="Export">导出</a>
+</p>
 
 <table class="table">
     <thead>
@@ -57,5 +41,3 @@
         }
     </tbody>
 </table>
-
-

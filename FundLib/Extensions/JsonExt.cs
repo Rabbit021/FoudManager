@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -18,6 +19,17 @@ namespace FundLib.Extensions
                 token = token.SelectToken(prop);
             var rst = token.ToObject<T>();
             return rst;
+        }
+
+        //根据某键去重查询
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source,
+            Func<TSource, TKey> keySelector)
+        {
+            var hashSet = new HashSet<TKey>();
+            if (source != null)
+                foreach (var item in source)
+                    if (hashSet.Add(keySelector(item)))
+                        yield return item;
         }
     }
 

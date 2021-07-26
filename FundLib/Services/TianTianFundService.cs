@@ -60,9 +60,9 @@ namespace FundLib.Services
             detail.BondTop10 = bondTop10;
 
             // 行业数据
+            detail.Sectors = mapper.Map<List<Sector>>(sector).Where(x => x.Percent != 0 && x.Percent != null).ToList();
             return detail;
         }
-
 
         private Tuple<IEnumerable<FundTop10>, IEnumerable<FundTop10>> GetETFTop10(string eftCode, double fundPercent)
         {

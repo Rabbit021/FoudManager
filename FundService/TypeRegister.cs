@@ -7,6 +7,7 @@ using FundLib.Interface;
 using FundLib.Model;
 using FundLib.Model.TianTian;
 using FundLib.Services;
+using FundService.Services;
 
 namespace FundService
 {
@@ -16,6 +17,7 @@ namespace FundService
         {
             builder.RegisterType<ProcessService>().As<IPrcessData>().SingleInstance();
             builder.RegisterType<TianTianFundService>().As<IFundFindService>().SingleInstance();
+            builder.RegisterType<CommonService>().SingleInstance();
 
             var settings = PublicDatas.Resolve<TianTianSettings>("TianTianParam");
             builder.RegisterInstance(settings).SingleInstance();
@@ -53,7 +55,7 @@ namespace FundService
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.zqmc))
                 .ForMember(x => x.Percent, opt => opt.MapFrom(x => x.zjzbl));
 
-            CreateMap<FundMNSectorAllocation, FundTop10>()
+            CreateMap<FundMNSectorAllocation, Sector>()
                 .ForMember(x => x.Code, opt => opt.MapFrom(x => x.hymc))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.hymc))
                 .ForMember(x => x.Percent, opt => opt.MapFrom(x => x.zjzbl));

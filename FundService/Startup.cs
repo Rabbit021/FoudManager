@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,15 @@ namespace FundService
             {
                 options.UseCaseSensitivePaths = false;
                 options.MaximumBodySize = 1024;
-                options.SizeLimit = 100 * 1024*1024;
+                options.SizeLimit = 100 * 1024 * 1024;
+            });
+
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,9 +51,8 @@ namespace FundService
             app.UseStaticFiles();
             app.UseResponseCaching();
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
