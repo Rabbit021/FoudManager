@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +10,7 @@ using FundLib.Model;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
-namespace FundService.Services
+namespace FundLib.Services
 {
     public class CommonService
     {
@@ -22,8 +22,9 @@ namespace FundService.Services
             _prcessData = prcessData;
         }
 
-        public List<FundDetail> GetFundList(IEnumerable<string> codes)
+        public List<FundDetail> GetFundList([NotNull] IEnumerable<string> codes)
         {
+            codes = codes.Distinct();
             var lst = new List<FundDetail>();
             if (codes.Any())
             {
@@ -106,7 +107,7 @@ namespace FundService.Services
                         row++;
                     }
 
-                    row+=3;
+                    row += 3;
 
                     // 统计数据
                     var summary = _prcessData.Process(lst);

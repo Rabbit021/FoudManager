@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using FundService.Services;
+using FundLib.Services;
 using Microsoft.AspNetCore.Http;
 
 namespace FundService.Controllers

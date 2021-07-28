@@ -1,14 +1,21 @@
-using System;
+using FundBlazorService.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FundLib;
+using FundService;
+using Smart.Blazor;
 
-namespace FundService
+namespace FundBlazorService
 {
     public class Startup
     {
@@ -17,25 +24,19 @@ namespace FundService
             Configuration = configuration;
             PublicDatas.Configuration = configuration;
         }
+
         public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddResponseCaching(options =>
-            {
-                options.UseCaseSensitivePaths = false;
-                options.MaximumBodySize = 1024;
-                options.SizeLimit = 100 * 1024 * 1024;
-            });
-
-            services.AddDistributedMemoryCache();
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
+            services.AddRazorPages();
+            services.AddServerSideBlazor();
+            services.AddSmart();
         }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -44,21 +45,19 @@ namespace FundService
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
             }
             PublicDatas.ServiceProvider = app.ApplicationServices;
             PublicDatas.Container = app.ApplicationServices.GetAutofacRoot();
+
             app.UseStaticFiles();
-            app.UseStaticFiles("/Web");
-            app.UseResponseCaching();
+
             app.UseRouting();
-            app.UseSession();
-            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
 
@@ -69,5 +68,6 @@ namespace FundService
         {
             builder.RegisterModule(new TypeRegister());
         }
+
     }
 }

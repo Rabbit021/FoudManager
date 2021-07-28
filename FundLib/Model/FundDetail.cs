@@ -36,16 +36,17 @@ namespace FundLib.Model
         {
             get
             {
-                var sum = Top10.Where(x => x.Percent != null).Sum(x => (double)x.Percent);
+                var sum = Top10?.Where(x => x.Percent != null).Sum(x => (double)x.Percent) ?? 00;
                 return Math.Round(sum);
             }
+          
         }
         [Column("重仓债券比例%")]
         public double? bondTopPercent
         {
             get
             {
-                var sum = BondTop10.Where(x => x.Percent != null).Sum(x => (double)x.Percent);
+                var sum = BondTop10?.Where(x => x.Percent != null).Sum(x => (double)x.Percent) ?? 0;
                 return Math.Round(sum);
             }
         }

@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Core;
 using Autofac.Core.Registration;
 using AutoMapper;
+using FundBlazorService.Data;
 using FundLib;
 using FundLib.Interface;
 using FundLib.Model;
@@ -17,6 +18,9 @@ namespace FundService
             builder.RegisterType<ProcessService>().As<IPrcessData>().SingleInstance();
             builder.RegisterType<TianTianFundService>().As<IFundFindService>().SingleInstance();
             builder.RegisterType<CommonService>().SingleInstance();
+            builder.RegisterType<WeatherForecastService>().SingleInstance();
+            builder.RegisterType<AppSettings>().SingleInstance();
+            
             // automapper”≥…‰
             RegisterAutoMapper(builder);
         }
