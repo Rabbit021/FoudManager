@@ -6,7 +6,7 @@
 <h3>数据概览</h3>
 
 <input placeholder="输入代码" @bind="newCode" />
-<button @onclick="AddCode">添加基金</button>
+<button @onclick="AddFund">添加基金</button>
 <button @onclick="Refresh">刷新数据</button>
 
 <hr />
@@ -15,6 +15,7 @@
 {
     <p><em>Loading...</em></p>
 }
+
 else
 {
     <Table Columns="columns" DataSource="fundList" SortMode="TableSortMode.One" Selection="true" ></Table>
