@@ -3,16 +3,22 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FundLib.Model;
+using FundLib.Services;
+using Microsoft.AspNetCore.Components;
 using Smart.Blazor;
 
 namespace FundBlazorService.Pages
 {
     public partial class FundData
     {
+        [Inject] private RepositoryService repositoryService { get; set; }
+        [Inject] private CommonService commonService { get; set; }
+
+        private object numberFormat = new { minimumFractionDigits = 2 };
         private List<TableColumn> columns = new List<TableColumn>();
         private List<FundDetail> fundList = new List<FundDetail>();
         private List<string> codes = new List<string>();
-        private string newCode;
+        private string newCode = "";
 
         protected override Task OnInitializedAsync()
         {
@@ -43,7 +49,8 @@ namespace FundBlazorService.Pages
         /// </summary>
         private void Refresh()
         {
-            fundList = CommonService.GetFundList(codes);
+
+            fundList = commonService.GetFundList(codes);
             codes = fundList.Select(x => x.code).ToList();
         }
     }
