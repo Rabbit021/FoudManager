@@ -18,7 +18,7 @@ namespace FundLib.Model
         public string ftype { get; set; }
 
         public string lastTime { get; set; }
-        [Column("类型")]
+        [Column("规模")]
         public double? assets { get; set; } // 净资产
 
         // 资产分配

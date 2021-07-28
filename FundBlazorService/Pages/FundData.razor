@@ -7,6 +7,9 @@
 
 <input placeholder="输入代码" @bind="newCode" />
 <button @onclick="AddCode">添加基金</button>
+<button @onclick="Refresh">刷新数据</button>
+
+<hr />
 
 @if (fundList == null)
 {
@@ -14,57 +17,5 @@
 }
 else
 {
-    <Table Selection="true" SortMode="TableSortMode.One" class="table">
-        <table>
-            <thead>
-                <tr>
-                    <th><a>代码</a></th>
-                    <th><a>名称</a></th>
-                    <th><a>类型</a></th>
-                    <th><a>规模(亿元)</a></th>
-                    <th><a>股票比例(%)</a></th>
-                    <th><a>债券比例(%)</a></th>
-                    <th><a>现金比例(%)</a></th>
-
-                    <th>重仓股票比例(%)</th>
-                    <th>重仓债券比例(%)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in fundList)
-                {
-                    <tr>
-                        <td>@item.code</td>
-                        <td>@item.name</td>
-                        <td>@item.ftype</td>
-                        <td>@item.assets</td>
-
-                        <td>@item.stockPercent</td>
-                        <td>@item.bondPercent</td>
-                        <td>@item.cashPercent</td>
-
-                        <td>@item.topPercent</td>
-                        <td>@item.bondTopPercent</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </Table>
-}
-
-
-@code {
-
-    private List<FundDetail> fundList = new List<FundDetail>();
-    private List<string> codes = new List<string>();
-    private string newCode;
-
-    private void AddCode()
-    {
-        if (!string.IsNullOrEmpty(newCode))
-        {
-            codes.Add(newCode);
-            fundList = CommonService.GetFundList(codes);
-        }
-    }
+    <Table Columns="columns" DataSource="fundList" SortMode="TableSortMode.One" Selection="true" ></Table>
 }
