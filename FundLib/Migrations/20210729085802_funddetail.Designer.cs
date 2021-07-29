@@ -3,18 +3,30 @@ using System;
 using FundLib.Model.DataBaseModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FundLib.Migrations
 {
     [DbContext(typeof(FundDbContext))]
-    partial class FundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210729085802_funddetail")]
+    partial class funddetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.8");
+
+            modelBuilder.Entity("FundLib.Model.DataBaseModel.FundItem", b =>
+                {
+                    b.Property<string>("code")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("code");
+
+                    b.ToTable("FundItem");
+                });
 
             modelBuilder.Entity("FundLib.Model.FundDetail", b =>
                 {

@@ -5,14 +5,16 @@ namespace FundLib.Model.DataBaseModel
 {
     public class FundDbContext : DbContext
     {
-        public DbSet<FundItem> FundItems { get; set; }
+        public DbSet<FundDetail> FundDetails { get; set; }
 
         public FundDbContext(DbContextOptions<FundDbContext> options) : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FundItem>().ToTable("FundItem");
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<FundDetail>().ToTable("FundDetail");
         }
     }
 }

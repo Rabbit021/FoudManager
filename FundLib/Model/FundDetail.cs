@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace FundLib.Model
 {
     public class FundDetail
     {
+        [Key]
         [Column("代码")]
         public string code { get; set; }
         [Column("持仓金额")]
@@ -38,7 +41,7 @@ namespace FundLib.Model
                 var sum = Top10?.Where(x => x.Percent != null).Sum(x => (double)x.Percent) ?? 00;
                 return Math.Round(sum);
             }
-          
+
         }
         [Column("重仓债券比例%")]
         public double? bondTopPercent
@@ -52,11 +55,14 @@ namespace FundLib.Model
 
         // 重仓明显
         //[Column("重仓股票", 10)]
+        [NotMapped]
         public IEnumerable<FundTop10> Top10 { get; set; }
-        //[Column("重仓债券", 11)]
+        
+        [NotMapped]
         public IEnumerable<FundTop10> BondTop10 { get; set; }
-
+        
         // 行业
+        [NotMapped]
         public IEnumerable<Sector> Sectors { get; set; }
     }
 

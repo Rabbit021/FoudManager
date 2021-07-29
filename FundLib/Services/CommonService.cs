@@ -133,7 +133,9 @@ namespace FundLib.Services
         #region 持仓管理
         public List<FundDetail> FindFundList()
         {
-            return null;
+            var codes = _repositoryService.GetFundList().Select(x => x.code).ToList();
+            var lst = GetFundList(codes);
+            return lst;
         }
 
         /// <summary>
@@ -141,9 +143,8 @@ namespace FundLib.Services
         /// </summary>
         public void SaveFund(IEnumerable<string> codes)
         {
-            // TODO 添加持仓代码
-            var datas = codes.Select(x => new FundItem { code = x });
-            _repositoryService.Save(datas.ToList());
+            var fundList = GetFundList(codes);
+            _repositoryService.Save(fundList);
         }
 
         /// <summary>

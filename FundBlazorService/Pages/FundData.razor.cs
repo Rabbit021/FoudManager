@@ -27,7 +27,7 @@ namespace FundBlazorService.Pages
                 if (display == null) continue;
                 columns.Add(new TableColumn() { Label = display.DisplayName, DataField = propertyInfo.Name });
             }
-
+            Refresh();
             return base.OnInitializedAsync();
         }
 
@@ -37,8 +37,13 @@ namespace FundBlazorService.Pages
             if (!string.IsNullOrEmpty(newCode))
             {
                 commonService.SaveFund(new[] { newCode });
-                fundList = commonService.FindFundList();
+                Refresh();
             }
+        }
+
+        private void Refresh()
+        {
+            fundList = commonService.FindFundList();
         }
     }
 }
