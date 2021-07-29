@@ -7,7 +7,6 @@ namespace FundLib.Model
 {
     public class FundDetail
     {
-
         [Column("代码")]
         public string code { get; set; }
         [Column("持仓金额")]

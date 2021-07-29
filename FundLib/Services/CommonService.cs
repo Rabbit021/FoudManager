@@ -7,6 +7,7 @@ using EPPlus.Core.Extensions;
 using FundLib.Extensions;
 using FundLib.Interface;
 using FundLib.Model;
+using FundLib.Model.DataBaseModel;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
@@ -16,10 +17,13 @@ namespace FundLib.Services
     {
         private readonly IFundFindService _fundFind;
         private readonly IPrcessData _prcessData;
-        public CommonService(IFundFindService fundService, IPrcessData prcessData)
+        private RepositoryService _repositoryService;
+
+        public CommonService(IFundFindService fundService, IPrcessData prcessData, RepositoryService repositoryService)
         {
             _fundFind = fundService;
             _prcessData = prcessData;
+            _repositoryService = repositoryService;
         }
 
         public List<FundDetail> GetFundList([NotNull] IEnumerable<string> codes)
@@ -125,5 +129,31 @@ namespace FundLib.Services
             }
         }
 
+
+        #region 持仓管理
+        public List<FundDetail> FindFundList()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// 添加活更新持仓
+        /// </summary>
+        public void SaveFund(IEnumerable<string> codes)
+        {
+            // TODO 添加持仓代码
+            var datas = codes.Select(x => new FundItem { code = x });
+            _repositoryService.Save(datas.ToList());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="code"></param>
+        public void DeleteFund(IEnumerable<string> codes)
+        {
+
+        }
+        #endregion
     }
 }

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundLib", "FundLib\FundLib.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundLibTests", "FundLibTests\FundLibTests.csproj", "{AB69FF01-AE49-441B-914D-57A414D68B6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FundBlazorService", "FundBlazorService\FundBlazorService.csproj", "{DB7C0EEB-5872-4AEF-BEB5-2416F65FE331}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundBlazorService", "FundBlazorService\FundBlazorService.csproj", "{DB7C0EEB-5872-4AEF-BEB5-2416F65FE331}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

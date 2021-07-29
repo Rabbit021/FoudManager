@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using SqlSugar;
+using FundLib.Model.DataBaseModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace FundLib.Services
 {
@@ -9,43 +11,19 @@ namespace FundLib.Services
     /// </summary>
     public class RepositoryService
     {
-        #region 数据库连接
-        private SqlSugarClient sugarClient;
-        public RepositoryService()
+        private readonly IDbContextFactory<FundDbContext> dbContextFactory;
+        public RepositoryService(IDbContextFactory<FundDbContext> dbContextFactory)
         {
-            sugarClient = GetInstance();
-            InitlizeTableList();
+            this.dbContextFactory = dbContextFactory;
         }
-        private SqlSugarClient GetInstance()
+        public void Save(List<FundItem> toList)
         {
-            SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
+            using (var context = dbContextFactory.CreateDbContext())
             {
-                ConnectionString = PublicDatas.Configuration["ConnectionStrings:DataBase"],
-                DbType = (DbType)Enum.Parse(typeof(DbType), PublicDatas.Configuration["ConnectionStrings:DataBaseType"]),
-                IsAutoCloseConnection = true,
-                InitKeyType = InitKeyType.Attribute
-            });
-            db.Aop.OnLogExecuting = (sql, pars) =>
-            {
-                Console.WriteLine(sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
-                Console.WriteLine();
-            };
-            return db;
+                foreach (var itr in toList)
+                    context.Add(itr);
+                context.SaveChanges();
+            }
         }
-        #endregion
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void InitlizeTableList()
-        {
-            var types = new Type[]
-            {
-
-            };
-            if (types.Any())
-                sugarClient.CodeFirst.SetStringDefaultLength(200).InitTables(types);
-        }
-
     }
 }
