@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -15,6 +16,9 @@ namespace FundBlazorService.Pages
 
         private List<TableColumn> columns = new List<TableColumn>();
         private List<FundDetail> fundList = new List<FundDetail>();
+        private IEnumerable<object> Selected = new List<object>();
+        private DateTime refreshTime;
+
         private string newCode = "";
 
         protected override Task OnInitializedAsync()
@@ -44,6 +48,7 @@ namespace FundBlazorService.Pages
         private void Refresh()
         {
             fundList = commonService.FindFundList();
+            refreshTime = DateTime.Now;
         }
     }
 }
