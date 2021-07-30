@@ -7,16 +7,15 @@ namespace FundLib.Model
 {
     public class FundDetail
     {
-        [SugarColumn(IsPrimaryKey = true, IsNullable = false)]
         [Column("代码")]
         public string code { get; set; }
         [Column("持仓金额")]
+        [SugarColumn(IsNullable = true)]
         public double? monery { get; set; }
         [Column("名称")]
         public string name { get; set; }
         [Column("类型")]
         public string ftype { get; set; }
-
         public string lastTime { get; set; }
         [Column("规模")]
         public double? assets { get; set; } // 净资产
@@ -32,7 +31,6 @@ namespace FundLib.Model
 
         // 重仓比例
         [Column("重仓股比例%")]
-        [SugarColumn(IsIgnore = true)]
         public double? topPercent
         {
             get
@@ -43,7 +41,6 @@ namespace FundLib.Model
 
         }
         [Column("重仓债券比例%")]
-        [SugarColumn(IsIgnore = true)]
         public double? bondTopPercent
         {
             get
@@ -57,10 +54,8 @@ namespace FundLib.Model
         //[Column("重仓股票", 10)]
         [SugarColumn(IsIgnore = true)]
         public IEnumerable<FundTop10> Top10 { get; set; }
-
         [SugarColumn(IsIgnore = true)]
         public IEnumerable<FundTop10> BondTop10 { get; set; }
-
         // 行业
         [SugarColumn(IsIgnore = true)]
         public IEnumerable<Sector> Sectors { get; set; }

@@ -32,27 +32,44 @@ namespace FundLib.Model.DataBaseModel
             };
             externalService.EntityService = (propertyInfo, column) =>
             {
+                if (!column.IsPrimarykey)
+                    column.IsNullable = true;
             };
+
             config.ConfigureExternalServices = externalService;
             return config;
         }
 
+
+        public override void Initlize()
+        {
+            base.Initlize();
+
+            var types = new Type[]
+            {
+                typeof(FundItem),
+                typeof(StockItem),
+                typeof(BondItem)
+            };
+            GetInstance();
+            var lst = new List<Type>();
+            foreach (var itr in types)
+            {
+                var tbName = GetTableName(itr);
+                if (!IsAny(tbName))
+                    lst.Add(itr);
+            }
+            if (lst.Any())
+                context.CodeFirst.BackupTable().SetStringDefaultLength(200).InitTables(lst.ToArray());
+        }
 
     }
 
     public class DbContextBase
     {
         // TODO CodeFirst
-        public void Initlize()
+        public virtual void Initlize()
         {
-
-            var types = new Type[]
-            {
-                typeof(FundDetail),
-                typeof(FundTop10),
-            };
-            GetInstance();
-            context.CodeFirst.BackupTable().SetStringDefaultLength(200).InitTables(types);
         }
 
         #region 创建数据库实例
@@ -127,10 +144,18 @@ namespace FundLib.Model.DataBaseModel
         #endregion
 
         #region Delete
+
         public bool DeleteByIds<TSource>(dynamic[] ids) where TSource : class, new()
         {
             var client = GetClient<TSource>();
             var rst = client.DeleteByIds(ids);
+            return rst;
+        }
+
+        public IDeleteable<TSource> AsDeleteable<TSource>() where TSource : class, new()
+        {
+            var client = GetClient<TSource>();
+            var rst = client.AsDeleteable();
             return rst;
         }
         #endregion
@@ -138,6 +163,7 @@ namespace FundLib.Model.DataBaseModel
         #region Save
         public int Save<TSource>(IEnumerable<TSource> datas) where TSource : class, new()
         {
+            if (!datas.Any()) return 0;
             var command = GetClient<TSource>().Context.Storageable(datas.ToList())
                 .ToStorage();
             var x = command.AsInsertable.ExecuteCommand(); //执行插入
@@ -160,6 +186,12 @@ namespace FundLib.Model.DataBaseModel
             return tableName;
         }
         #endregion
+
+        protected bool IsAny(string tableName)
+        {
+            var rst = context.DbMaintenance.IsAnyTable(tableName, false);
+            return rst;
+        }
     }
 
     public class ConnectionStrings

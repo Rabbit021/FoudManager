@@ -31,7 +31,7 @@ namespace FundBlazorService.Pages
                 if (display == null) continue;
                 columns.Add(new TableColumn() { Label = display.DisplayName, DataField = propertyInfo.Name });
             }
-            Refresh();
+            fundList = commonService.LoadFunds();
             return base.OnInitializedAsync();
         }
 
@@ -47,7 +47,8 @@ namespace FundBlazorService.Pages
 
         private void Refresh()
         {
-            fundList = commonService.FindFundList();
+            commonService.RefreshFunds();
+            fundList = commonService.LoadFunds();
             refreshTime = DateTime.Now;
         }
     }

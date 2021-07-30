@@ -35,9 +35,9 @@ namespace FundService
     }
 
     // ¿‡–Õ◊÷∂Œ”≥…‰
-    public class AutoMapperProfile : Profile
+    public class AutoMapperProfile : BaseProfile
     {
-        public AutoMapperProfile()
+        public AutoMapperProfile():base()
         {
             CreateMap<FundMNInverstPosition.Fundstock, FundTop10>()
                 .ForMember(x => x.Code, opt => opt.MapFrom(x => x.gpdm))

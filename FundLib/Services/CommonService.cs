@@ -131,11 +131,24 @@ namespace FundLib.Services
 
 
         #region 持仓管理
-        public List<FundDetail> FindFundList()
+        /// <summary>
+        /// 加载基金
+        /// </summary>
+        /// <returns></returns>
+        public List<FundDetail> LoadFunds()
         {
-            var codes = _repositoryService.GetFundList().Select(x => x.code).ToList();
-            var lst = GetFundList(codes);
-            return lst;
+            var codes = _repositoryService.GetFundList();
+            return codes;
+        }
+
+        /// <summary>
+        /// 更新基金数据
+        /// </summary>
+        /// <returns></returns>
+        public void RefreshFunds()
+        {
+            var codes = LoadFunds().Select(x => x.code).ToList();
+            SaveFund(codes);
         }
 
         /// <summary>

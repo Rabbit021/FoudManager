@@ -42,7 +42,7 @@ namespace FundLib.Services
                 detail.ftype = baseInfo.ftype;
                 detail.assets = Math.Round((double)postSummary.nav, 2);
 
-                detail.stockPercent = (double)postSummary.stockPercent + (double)postSummary.fundPercent; // ETF链接
+                detail.stockPercent = postSummary.stockPercent + postSummary.fundPercent; // ETF链接
                 detail.bondPercent = postSummary.bondPercent;
                 detail.cashPercent = postSummary.cashPercent;
                 detail.otherPercent = postSummary.otherPercent;
@@ -65,8 +65,9 @@ namespace FundLib.Services
                 detail.Sectors = mapper.Map<List<Sector>>(sector).Where(x => x.Percent != 0 && x.Percent != null).ToList();
                 return detail;
             }
-            catch
+            catch (Exception exp)
             {
+                Console.WriteLine($"{exp.Message} 基金代码{code}");
                 return null;
             }
         }
