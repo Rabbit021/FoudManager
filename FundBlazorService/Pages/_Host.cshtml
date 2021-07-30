@@ -17,15 +17,13 @@
 
     @* smart blazor *@
     <link href="_content/Smart.Blazor/css/smart.default.css" rel="stylesheet" />
-    <script src="_content/Smart.Blazor/js/smart.blazor.js"></script>
-    <script src="_content/Smart.Blazor/js/smart.elements.js"></script>
 </head>
 <body>
     <app>
         <component type="typeof(App)" render-mode="ServerPrerendered" />
     </app>
 
-<div id="blazor-error-ui">
+    <div id="blazor-error-ui">
         <environment include="Staging,Production">
             An error has occurred. This application may no longer respond until reloaded.
         </environment>
@@ -37,5 +35,7 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
+    <script src="_content/Smart.Blazor/js/smart.blazor.js"></script>
+    <script src="_content/Smart.Blazor/js/smart.elements.js"></script>
 </body>
 </html>

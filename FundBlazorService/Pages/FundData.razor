@@ -5,6 +5,9 @@
 <input placeholder="输入代码" @bind="newCode" />
 <input placeholder="持仓金额" />
 <button class="btn btn-primary" @onclick="AddFund">添加基金</button>
+
+<button class="btn btn-primary" @onclick="Import">导入</button>
+
 <button class="btn btn-primary" @onclick="Refresh">刷新基金</button>
 <p>更新时间: @refreshTime </p>
 
@@ -17,5 +20,6 @@
 
 else
 {
+
     <Table Columns="columns" DataSource="fundList" SortMode="TableSortMode.One" Selection="true" Selected="Selected"></Table>
 }
