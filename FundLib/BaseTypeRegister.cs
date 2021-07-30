@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using FundLib.Interface;
+using FundLib.Model.DataBaseModel;
 using FundLib.Services;
 
 namespace FundLib
@@ -17,11 +18,16 @@ namespace FundLib
             builder.RegisterType<CommonService>().SingleInstance();
             builder.RegisterType<AppSettings>().SingleInstance();
             builder.RegisterType<RepositoryService>().InstancePerLifetimeScope();
+            builder.RegisterType<FundDbContext>().InstancePerLifetimeScope();
+
+            var instance = PublicDatas.GetConfig<ConnectionStrings>("ConnectionStrings");
+            builder.RegisterInstance(instance).SingleInstance();
+
         }
 
         protected virtual void RegisterAutoMapper(ContainerBuilder builder)
         {
-           
+
         }
     }
 }

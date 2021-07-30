@@ -8,7 +8,6 @@ using Autofac.Extensions.DependencyInjection;
 using FundLib;
 using FundLib.Model.DataBaseModel;
 using FundService;
-using Microsoft.EntityFrameworkCore;
 using Smart.Blazor;
 
 namespace FundBlazorService
@@ -30,7 +29,6 @@ namespace FundBlazorService
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSmart();
-            services.AddDbContextFactory<FundDbContext>(options => options.UseSqlite(@"DataSource=D:/db.sqlite"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -231,7 +231,7 @@ namespace FundLib.Services
         /// <returns></returns>
         private Dictionary<string, string> GetQueryParamDict(IDictionary<string, string> query = null)
         {
-            var dict = PublicDatas.Resolve<Dictionary<string, string>>("TianTianParam");
+            var dict = PublicDatas.GetConfig<Dictionary<string, string>>("TianTianParam");
             query ??= new Dictionary<string, string>();
             foreach (var itr in query)
                 dict[itr.Key] = itr.Value;

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using SqlSugar;
 
 namespace FundLib.Model
 {
     public class FundDetail
     {
-        [Key]
+        [SugarColumn(IsPrimaryKey = true, IsNullable = false)]
         [Column("代码")]
         public string code { get; set; }
         [Column("持仓金额")]
@@ -34,6 +32,7 @@ namespace FundLib.Model
 
         // 重仓比例
         [Column("重仓股比例%")]
+        [SugarColumn(IsIgnore = true)]
         public double? topPercent
         {
             get
@@ -44,6 +43,7 @@ namespace FundLib.Model
 
         }
         [Column("重仓债券比例%")]
+        [SugarColumn(IsIgnore = true)]
         public double? bondTopPercent
         {
             get
@@ -55,14 +55,14 @@ namespace FundLib.Model
 
         // 重仓明显
         //[Column("重仓股票", 10)]
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public IEnumerable<FundTop10> Top10 { get; set; }
-        
-        [NotMapped]
+
+        [SugarColumn(IsIgnore = true)]
         public IEnumerable<FundTop10> BondTop10 { get; set; }
-        
+
         // 行业
-        [NotMapped]
+        [SugarColumn(IsIgnore = true)]
         public IEnumerable<Sector> Sectors { get; set; }
     }
 

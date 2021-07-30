@@ -1,4 +1,5 @@
-﻿namespace FundLib.Model
+﻿
+namespace FundLib.Model
 {
     public class FundTop10
     {
