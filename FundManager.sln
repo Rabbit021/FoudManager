@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundLib", "FundLib\FundLib.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundLibTests", "FundLibTests\FundLibTests.csproj", "{AB69FF01-AE49-441B-914D-57A414D68B6E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FundBlazorService", "FundBlazorService\FundBlazorService.csproj", "{DB7C0EEB-5872-4AEF-BEB5-2416F65FE331}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{AB69FF01-AE49-441B-914D-57A414D68B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB69FF01-AE49-441B-914D-57A414D68B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB69FF01-AE49-441B-914D-57A414D68B6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB7C0EEB-5872-4AEF-BEB5-2416F65FE331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB7C0EEB-5872-4AEF-BEB5-2416F65FE331}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB7C0EEB-5872-4AEF-BEB5-2416F65FE331}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB7C0EEB-5872-4AEF-BEB5-2416F65FE331}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

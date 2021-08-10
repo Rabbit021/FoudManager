@@ -14,7 +14,7 @@ namespace FundLib
             RegisterAutoMapper(builder);
 
             builder.RegisterType<ProcessService>().As<IPrcessData>().SingleInstance();
-            builder.RegisterType<TianTianFundService>().As<IFundFindService>().SingleInstance();
+            builder.RegisterType<DefaultFundService>().As<IFundFindService>().SingleInstance();
             builder.RegisterType<CommonService>().SingleInstance();
             builder.RegisterType<AppSettings>().SingleInstance();
             builder.RegisterType<RepositoryService>().InstancePerLifetimeScope();

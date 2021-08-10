@@ -26,36 +26,11 @@ namespace FundService.Controllers
             var lst = _commonService.GetFundList(new string[0]);
             return View(lst);
         }
-
-        public IActionResult UpdLoad(List<IFormFile> files)
-        {
-            var file = Request.Form.Files.FirstOrDefault();
-            var codes = new List<string>();
-            if (file != null)
-                codes = _commonService.ReadCodes(file).Select(x => x.code).ToList();
-            var lst = _commonService.GetFundList(codes);
-            return View("Index", lst);
-        }
-
+     
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.Client, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult Export(List<IFormFile> files)
-        {
-            var file = Request.Form.Files.FirstOrDefault();
-            var codes = new List<string>();
-            if (file != null)
-                codes = _commonService.ReadCodes(file).Select(x => x.code).ToList();
-            var lst = _commonService.GetFundList(codes);
-            var bytes = _commonService.AsExcel(lst);
-
-            return new FileContentResult(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-            {
-                FileDownloadName = $"基金统计-{DateTime.Now.ToShortDateString()}.xlsx"
-            };
         }
     }
 }

@@ -10,18 +10,15 @@ using FundLib.Services;
 
 namespace FundService
 {
-    public class TypeRegister : Module
+    public class TypeRegister : BaseTypeRegister
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ProcessService>().As<IPrcessData>().SingleInstance();
-            builder.RegisterType<TianTianFundService>().As<IFundFindService>().SingleInstance();
-            builder.RegisterType<CommonService>().SingleInstance();
-            // automapperÓ³Éä
-            RegisterAutoMapper(builder);
+            base.Load(builder);
+            // TODO
         }
 
-        private void RegisterAutoMapper(ContainerBuilder builder)
+        protected override void RegisterAutoMapper(ContainerBuilder builder)
         {
             var autoMapperProfiles = new[] { typeof(AutoMapperProfile) };
             builder.Register(ctx => new MapperConfiguration(cfg =>

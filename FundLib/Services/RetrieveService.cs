@@ -1,93 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using FundLib.Interface;
-using FundLib.Model;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
 using FundLib.Extensions;
+using FundLib.Interface;
 using FundLib.Model.TianTian;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace FundLib.Services
 {
-    public class TianTianFundService : IFundFindService
+    /// <summary>
+    /// 基金数据检索和存储
+    /// </summary>
+    public class RetrieveService
     {
-        private IMapper mapper;
-        public TianTianFundService()
+        private readonly IFundFindService fundFindService;
+        private RepositoryService repositoryService;
+
+        public RetrieveService(IFundFindService fundFindService, RepositoryService repositoryService)
         {
-            mapper = PublicDatas.Resolve<IMapper>();
-        }
-        public IEnumerable<FundDetail> GetFundDetailList(IEnumerable<string> codes)
-        {
-            var taskList = codes.Select(code => Task.Run(() => GetFundDetail(code)));
-            Task.WaitAll(taskList.ToArray());
-            var lst = taskList.Select(x => x.Result).Where(x => x != null).ToList();
-            return lst;
-        }
-
-        public FundDetail GetFundDetail(string code)
-        {
-            try
-            {
-                var detail = new FundDetail();
-                var baseInfo = GetFundMNDetailInformation(code);
-                var postSummary = GetFundMNAssetAllocationNew(code);
-                var postion = GetFundMNInverstPosition(code); // 个股持仓
-                var sector = GetFundMNSectorAllocation(code); // 行业持仓
-                                                              // 基础数据
-                detail.code = code;
-                detail.name = baseInfo.shortname;
-                detail.ftype = baseInfo.ftype;
-                detail.assets = Math.Round((double)postSummary.nav, 2);
-
-                detail.stockPercent = postSummary.stockPercent + postSummary.fundPercent; // ETF链接
-                detail.bondPercent = postSummary.bondPercent;
-                detail.cashPercent = postSummary.cashPercent;
-                detail.otherPercent = postSummary.otherPercent;
-
-                // 持仓数据
-                var top10 = postion.fundStocks.Select(x => mapper.Map<FundTop10>(x)).ToList();
-                var bondTop10 = postion.fundboods.Select(x => mapper.Map<FundTop10>(x)).ToList();
-
-                // TODO 配置 联接基金
-                if (postion.etfcode != null)
-                {
-                    var tuble = GetETFTop10(postion.etfcode, (double)postSummary.fundPercent);
-                    top10.AddRange(tuble.Item1);
-                    top10.AddRange(tuble.Item2);
-                }
-                detail.Top10 = top10;
-                detail.BondTop10 = bondTop10;
-
-                // 行业数据
-                detail.Sectors = mapper.Map<List<Sector>>(sector).Where(x => x.Percent != 0 && x.Percent != null).ToList();
-                return detail;
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine($"{exp.Message} 基金代码{code}");
-                return null;
-            }
-        }
-
-        private Tuple<IEnumerable<FundTop10>, IEnumerable<FundTop10>> GetETFTop10(string eftCode, double fundPercent)
-        {
-            var etfPos = GetFundMNInverstPosition(eftCode); // 个股持仓
-            var stockTops = etfPos.fundStocks.Select(x => mapper.Map<FundTop10>(x));
-            foreach (var itr in stockTops)
-            {
-                itr.Percent = itr.Percent * fundPercent / 100;
-            }
-
-            var bondTops = etfPos.fundboods.Select(x => mapper.Map<FundTop10>(x));
-            foreach (var itr in bondTops)
-            {
-                itr.Percent = itr.Percent * fundPercent / 100;
-            }
-            var lst = new Tuple<IEnumerable<FundTop10>, IEnumerable<FundTop10>>(stockTops, bondTops);
-            return lst;
+            this.fundFindService = fundFindService;
+            this.repositoryService = repositoryService;
         }
 
         #region 天天基金App数据接口 Get

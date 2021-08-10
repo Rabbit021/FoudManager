@@ -10,8 +10,10 @@ namespace FundLib.Model
         [Column("代码")]
         public string code { get; set; }
         [Column("持仓金额")]
-        [SugarColumn(IsNullable = true)]
+
+        [SugarColumn(IsNullable = true)]  // TODO 改为份额
         public double? monery { get; set; }
+
         [Column("名称")]
         public string name { get; set; }
         [Column("类型")]

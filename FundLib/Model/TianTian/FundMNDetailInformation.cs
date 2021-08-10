@@ -69,12 +69,12 @@ namespace FundLib.Model.TianTian
     }
 
     /// <summary>
-    ///     基金持仓
+    /// 基金持仓
     /// </summary>
     public class FundMNInverstPosition
     {
         /// <summary>
-        ///     基金持仓
+        /// 基金持仓
         /// </summary>
         public Fundstock[] fundStocks { get; set; }
 

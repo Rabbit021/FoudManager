@@ -18,6 +18,9 @@ namespace FundLib
 
             CreateMap<FundTop10, BondItem>();
             CreateMap<BondItem, FundTop10>();
+
+            CreateMap<FundTop10, SummaryItem>();
+            CreateMap<StockItem, SummaryItem>();
         }
     }
 }

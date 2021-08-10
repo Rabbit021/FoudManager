@@ -12,6 +12,7 @@ namespace FundLib.Model.DataBaseModel
         public string code { get; set; }
         public double? monery { get; set; }
         public string name { get; set; }
+
         public string ftype { get; set; }
         public double? assets { get; set; } // 净资产
 
@@ -36,6 +37,7 @@ namespace FundLib.Model.DataBaseModel
         public string code { get; set; }
         public string name { get; set; }
         public double? percent { get; set; }
+        public double assets { get; set; }
     }
 
     /// <summary>

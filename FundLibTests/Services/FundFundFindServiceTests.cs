@@ -9,8 +9,8 @@ namespace FundLibTests.Services
         [TestMethod()]
         public void GetFundDetailListTest()
         {
-            var service = new FundFundFindService();
-            var codes = new string[]
+            var service = new DefaultFundService();
+            var codes = new[]
             {
                 "008281"
             };
@@ -20,8 +20,8 @@ namespace FundLibTests.Services
         [TestMethod()]
         public void GetFundDetailListTest2()
         {
-            var service = new FundFundFindService();
-            var codes = new string[]
+            var service = new DefaultFundService();
+            var codes = new[]
             {
                 "001938"
             };
