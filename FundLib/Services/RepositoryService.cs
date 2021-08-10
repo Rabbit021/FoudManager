@@ -23,7 +23,7 @@ namespace FundLib.Services
             _fundDbContext.Initlize();
         }
 
-        public void Save(List<FundDetail> datas)
+        public void Save(List<FundInfo> datas)
         {
             var items = mapper.Map<List<FundItem>>(datas);
 
@@ -31,14 +31,14 @@ namespace FundLib.Services
             var bondItems = new List<BondItem>();
             foreach (var itr in datas)
             {
-                var lst = mapper.Map<List<StockItem>>(itr.Top10);
+                var lst = mapper.Map<List<StockItem>>(itr.FundStocks);
                 lst.ForEach(x =>
                 {
                     x.fcode = itr.code;
                 });
                 stockItems.AddRange(lst);
 
-                var lst2 = mapper.Map<List<BondItem>>(itr.BondTop10);
+                var lst2 = mapper.Map<List<BondItem>>(itr.FundBoods);
                 lst2.ForEach(x =>
                 {
                     x.fcode = itr.code;
@@ -58,14 +58,14 @@ namespace FundLib.Services
             _fundDbContext.InsertRange(bondItems);
         }
 
-        public List<FundDetail> GetFundList()
+        public List<FundInfo> GetFundList()
         {
             var items = _fundDbContext.GetList<FundItem>();
-            var details = mapper.Map<List<FundDetail>>(items);
+            var details = mapper.Map<List<FundInfo>>(items);
 
             foreach (var itr in details)
             {
-                itr.Top10 = mapper.Map<List<FundTop10>>(_fundDbContext.GetList<StockItem>());
+                itr.FundStocks = mapper.Map<List<PercenItem>>(_fundDbContext.GetList<StockItem>());
             }
             return details;
         }

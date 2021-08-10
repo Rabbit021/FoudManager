@@ -15,12 +15,12 @@ namespace FundLib.Services
         {
             _mapper = mapper;
         }
-        public FundSummary Process(IEnumerable<FundDetail> fundDetails)
+        public FundSummary Process(IEnumerable<FundInfo> fundDetails)
         {
-            var fundList = new List<FundDetail>(fundDetails);
+            var fundList = new List<FundInfo>(fundDetails);
 
-            var top10 = fundList.SelectMany(x => x.Top10 ?? new List<FundTop10>()).ToList();
-            var bondTop10 = fundList.SelectMany(x => x.BondTop10 ?? new List<FundTop10>()).ToList();
+            var top10 = fundList.SelectMany(x => x.FundStocks ?? new List<PercenItem>()).ToList();
+            var bondTop10 = fundList.SelectMany(x => x.FundBoods ?? new List<PercenItem>()).ToList();
 
             var rst = new FundSummary();
             rst.StockItems = _mapper.Map<List<SummaryItem>>(top10).DistinctBy(x => x.Code);

@@ -22,11 +22,11 @@ namespace FundLib.Services
             this.mapper = PublicDatas.Resolve<IMapper>();
         }
 
-        public FundDetail GetFundDetail(string code)
+        public FundInfo GetFundDetail(string code)
         {
             try
             {
-                var detail = new FundDetail();
+                var detail = new FundInfo();
                 var baseInfo = GetFundMNDetailInformation(code);
                 var postSummary = GetFundMNAssetAllocationNew(code);
                 var postion = GetFundMNInverstPosition(code); // 个股持仓
@@ -43,11 +43,11 @@ namespace FundLib.Services
                 detail.otherPercent = postSummary.otherPercent;
 
                 // 持仓数据
-                detail.Top10 = postion.fundStocks.Select(x => mapper.Map<FundTop10>(x)).ToList();
-                detail.BondTop10 = postion.fundboods.Select(x => mapper.Map<FundTop10>(x)).ToList();
+                detail.FundStocks = postion.fundStocks.Select(x => mapper.Map<PercenItem>(x)).ToList();
+                detail.FundBoods = postion.fundboods.Select(x => mapper.Map<PercenItem>(x)).ToList();
 
                 // 行业数据
-                detail.Sectors = mapper.Map<List<Sector>>(sector).Where(x => x.Percent != 0 && x.Percent != null).ToList();
+                detail.Sectors = mapper.Map<List<PercenItem>>(sector).Where(x => x.Percent != 0 && x.Percent != null).ToList();
                 return detail;
             }
             catch (Exception exp)
@@ -111,9 +111,11 @@ namespace FundLib.Services
                     itr.zjzbl = itr.zjzbl * fundPercent / 100;
                     var item = boodsDict.TryGetValue(itr.zqdm);
                     if (item != null)
-                        item.zjzbl+= itr.zjzbl;
+                        item.zjzbl += itr.zjzbl;
                     boodsDict[itr.zqdm] = item;
                 }
+                rst.fundStocks = fundDict.Values.ToArray();
+                rst.fundboods = boodsDict.Values.ToArray();
             }
             return rst;
         }

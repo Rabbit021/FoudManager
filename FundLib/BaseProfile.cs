@@ -9,17 +9,17 @@ namespace FundLib
     {
         public BaseProfile() : base()
         {
-            CreateMap<FundDetail, FundItem>();
-            CreateMap<FundItem, FundDetail>();
+            CreateMap<FundInfo, FundItem>();
+            CreateMap<FundItem, FundInfo>();
 
 
-            CreateMap<FundTop10, StockItem>();
-            CreateMap<StockItem, FundTop10>();
+            CreateMap<PercenItem, StockItem>();
+            CreateMap<StockItem, PercenItem>();
 
-            CreateMap<FundTop10, BondItem>();
-            CreateMap<BondItem, FundTop10>();
+            CreateMap<PercenItem, BondItem>();
+            CreateMap<BondItem, PercenItem>();
 
-            CreateMap<FundTop10, SummaryItem>();
+            CreateMap<PercenItem, SummaryItem>();
             CreateMap<StockItem, SummaryItem>();
         }
     }

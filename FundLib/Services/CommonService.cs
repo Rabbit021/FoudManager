@@ -20,7 +20,7 @@ namespace FundLib.Services
             this.repositoryService = repositoryService;
         }
 
-        public List<FundDetail> GetFundList([NotNull] IEnumerable<string> codes)
+        public List<FundInfo> GetFundList([NotNull] IEnumerable<string> codes)
         {
             var lst = repositoryService.GetFundList();
             return lst;

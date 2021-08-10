@@ -37,22 +37,22 @@ namespace FundService
     {
         public AutoMapperProfile()
         {
-            CreateMap<FundMNInverstPosition.Fundstock, FundTop10>()
+            CreateMap<FundMNInverstPosition.Fundstock, PercenItem>()
                 .ForMember(x => x.Code, opt => opt.MapFrom(x => x.gpdm))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.gpjc))
                 .ForMember(x => x.Percent, opt => opt.MapFrom(x => x.jzbl));
 
-            CreateMap<FundMNInverstPosition.Fundbood, FundTop10>()
+            CreateMap<FundMNInverstPosition.Fundbood, PercenItem>()
                 .ForMember(x => x.Code, opt => opt.MapFrom(x => x.zqdm))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.zqmc))
                 .ForMember(x => x.Percent, opt => opt.MapFrom(x => x.zjzbl));
 
-            CreateMap<FundMNSectorAllocation, Sector>()
+            CreateMap<FundMNSectorAllocation, PercenItem>()
                 .ForMember(x => x.Code, opt => opt.MapFrom(x => x.hymc))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.hymc))
                 .ForMember(x => x.Percent, opt => opt.MapFrom(x => x.zjzbl));
 
-            CreateMap<FundTop10, SummaryItem>();
+            CreateMap<PercenItem, SummaryItem>();
         }
     }
 }

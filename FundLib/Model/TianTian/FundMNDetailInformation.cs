@@ -146,7 +146,7 @@ namespace FundLib.Model.TianTian
     }
 
     /// <summary>
-    ///     涨幅
+    /// 涨幅
     /// </summary>
     public class FundMNPeriodIncrease
     {
@@ -161,7 +161,7 @@ namespace FundLib.Model.TianTian
     }
 
     /// <summary>
-    ///     特色数据
+    /// 特色数据
     /// </summary>
     public class FundMNUniqueInfo
     {
