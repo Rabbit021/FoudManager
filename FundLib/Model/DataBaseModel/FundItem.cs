@@ -4,13 +4,23 @@ using SqlSugar;
 namespace FundLib.Model.DataBaseModel
 {
     /// <summary>
-    /// 基金
+    /// 基金持仓
     /// </summary>
-    public class FundItem
+    public class FundPosition : ITableBase
     {
         [SugarColumn(IsPrimaryKey = true)]
-        public string code { get; set; }
-        public double? monery { get; set; }
+        public string fcode { get; set; }
+        public double cost { get; set; }
+        public double fund_share { get; set; }
+    }
+
+    /// <summary>
+    /// 基金信息
+    /// </summary>
+    public class FundItem : ITableBase
+    {
+        [SugarColumn(IsPrimaryKey = true)]
+        public string fcode { get; set; }
         public string name { get; set; }
 
         public string ftype { get; set; }
@@ -30,20 +40,17 @@ namespace FundLib.Model.DataBaseModel
     /// <summary>
     /// 持仓股票详情
     /// </summary>
-    public class StockItem
+    public class StockItem : ITableBase
     {
-        [SugarColumn(IndexGroupNameList = new[] { "index_fcode" })]
         public string fcode { get; set; }
-        public string code { get; set; }
+        public string scode { get; set; }
         public string name { get; set; }
         public double? percent { get; set; }
         public double assets { get; set; }
     }
 
-    /// <summary>
-    /// 持仓债券
-    /// </summary>
-    public class BondItem : StockItem
+
+    public interface ITableBase
     {
 
     }

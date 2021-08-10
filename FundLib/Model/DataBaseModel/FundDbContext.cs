@@ -40,17 +40,30 @@ namespace FundLib.Model.DataBaseModel
             return config;
         }
 
-
         public override void Initlize()
         {
             base.Initlize();
 
-            var types = new Type[]
+            var types = new List<Type>();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var interfaceType = typeof(ITableBase);
+
+            foreach (var itr in assemblies)
             {
-                typeof(FundItem),
-                typeof(StockItem),
-                typeof(BondItem)
-            };
+                foreach (Type item in itr.GetTypes())
+                {
+                    if (!item.IsClass) continue;
+                    var ins = item.GetInterfaces();
+                    foreach (Type ty in ins)
+                    {
+                        if (ty == interfaceType)
+                        {
+                            types.Add(item);
+                        }
+                    }
+                }
+            }
+
             GetInstance();
             var lst = new List<Type>();
             foreach (var itr in types)

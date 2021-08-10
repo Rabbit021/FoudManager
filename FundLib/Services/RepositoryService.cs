@@ -28,34 +28,21 @@ namespace FundLib.Services
             var items = mapper.Map<List<FundItem>>(datas);
 
             var stockItems = new List<StockItem>();
-            var bondItems = new List<BondItem>();
             foreach (var itr in datas)
             {
                 var lst = mapper.Map<List<StockItem>>(itr.FundStocks);
-                lst.ForEach(x =>
-                {
-                    x.fcode = itr.code;
-                });
+                lst.ForEach(x => { x.fcode = itr.code; });
                 stockItems.AddRange(lst);
 
-                var lst2 = mapper.Map<List<BondItem>>(itr.FundBoods);
-                lst2.ForEach(x =>
-                {
-                    x.fcode = itr.code;
-                });
-                bondItems.AddRange(lst2);
+
+
+                _fundDbContext.Save(items);
+                var scodes = (stockItems.Select(x => x.fcode).ToArray());
+
+                _fundDbContext.AsDeleteable<StockItem>().Where(x => SqlFunc.ContainsArray(scodes, x.fcode))
+                    .ExecuteCommand();
+                _fundDbContext.InsertRange(stockItems);
             }
-
-            _fundDbContext.Save(items);
-
-            var scodes = (stockItems.Select(x => x.fcode).ToArray());
-            var bcodes = (bondItems.Select(x => x.fcode).ToArray());
-
-            _fundDbContext.AsDeleteable<StockItem>().Where(x => SqlFunc.ContainsArray(scodes, x.fcode)).ExecuteCommand();
-            _fundDbContext.InsertRange(stockItems);
-
-            _fundDbContext.AsDeleteable<BondItem>().Where(x => SqlFunc.ContainsArray(bcodes, x.fcode)).ExecuteCommand();
-            _fundDbContext.InsertRange(bondItems);
         }
 
         public List<FundInfo> GetFundList()

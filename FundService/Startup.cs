@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FundLib;
+using FundLib.Extensions;
+using Quartz;
 
 namespace FundService
 {
@@ -17,7 +19,15 @@ namespace FundService
             Configuration = configuration;
             PublicDatas.Configuration = configuration;
         }
+
+        private void OnStarted()
+        {
+            // TODO Æô¶¯ÈÎÎñ
+
+        }
+
         public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -35,8 +45,10 @@ namespace FundService
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            services.AddJobsService();
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +60,7 @@ namespace FundService
             }
             PublicDatas.ServiceProvider = app.ApplicationServices;
             PublicDatas.Container = app.ApplicationServices.GetAutofacRoot();
+            lifetime.ApplicationStarted.Register(OnStarted);
             app.UseStaticFiles();
             app.UseStaticFiles("/Web");
             app.UseResponseCaching();

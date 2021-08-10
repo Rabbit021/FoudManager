@@ -19,6 +19,7 @@ namespace FundLib
             builder.RegisterType<AppSettings>().SingleInstance();
             builder.RegisterType<RepositoryService>().InstancePerLifetimeScope();
             builder.RegisterType<FundDbContext>().InstancePerLifetimeScope();
+            builder.RegisterType<RetrieveService>().InstancePerLifetimeScope();
 
             var instance = PublicDatas.GetConfig<ConnectionStrings>("ConnectionStrings");
             builder.RegisterInstance(instance).SingleInstance();

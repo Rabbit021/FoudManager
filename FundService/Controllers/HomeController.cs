@@ -23,8 +23,7 @@ namespace FundService.Controllers
         [ResponseCache(Duration = 600)]
         public IActionResult Index()
         {
-            var lst = _commonService.GetFundList(new string[0]);
-            return View(lst);
+            return View();
         }
      
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.Client, NoStore = true)]

@@ -20,7 +20,13 @@ namespace FundLib.Services
             this.repositoryService = repositoryService;
         }
 
-        // TODO 定时同步数据
+        /// <summary>
+        /// 检索和更新同步数据
+        /// </summary>
+        /// <param name="code"></param>
+        public void Retrieve(string code)
+        {
 
+        }
     }
 }

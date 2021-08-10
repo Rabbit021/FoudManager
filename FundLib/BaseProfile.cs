@@ -12,12 +12,9 @@ namespace FundLib
             CreateMap<FundInfo, FundItem>();
             CreateMap<FundItem, FundInfo>();
 
-
             CreateMap<PercenItem, StockItem>();
             CreateMap<StockItem, PercenItem>();
 
-            CreateMap<PercenItem, BondItem>();
-            CreateMap<BondItem, PercenItem>();
 
             CreateMap<PercenItem, SummaryItem>();
             CreateMap<StockItem, SummaryItem>();
