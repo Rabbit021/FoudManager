@@ -2,6 +2,7 @@
 using System.Linq;
 using FundLib.Extensions;
 using FundLib.Interface;
+using FundLib.Model.DataBaseModel;
 using FundLib.Model.TianTian;
 
 namespace FundLib.Services
@@ -20,13 +21,20 @@ namespace FundLib.Services
             this.repositoryService = repositoryService;
         }
 
+
         /// <summary>
         /// 检索和更新同步数据
         /// </summary>
         /// <param name="code"></param>
-        public void Retrieve(string code)
+        public void Retrieve()
         {
-
+            var codes = repositoryService.GetDbContext().GetList<FundPosition>().Select(x => x.fcode).ToList();
+            foreach (var code in codes)
+            {
+                var info = fundFindService.GetFundInfo(code);
+                repositoryService.Save(info);
+            }
+            //repositoryService.GetFundList();
         }
     }
 }

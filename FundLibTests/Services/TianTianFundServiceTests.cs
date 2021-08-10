@@ -12,7 +12,7 @@ namespace FundLib.Services.Tests
     public class TianTianFundServiceTests : UnitTestBase
     {
         private string code = "000248";
-        //private string code = "008281";
+        //private string fcode = "008281";
 
         private static DefaultFundService GetService()
         {
@@ -90,7 +90,7 @@ namespace FundLib.Services.Tests
         public void GetFundDetailTest()
         {
             var service = GetService();
-            var lst = service.GetFundDetail(code);
+            var lst = service.GetFundInfo(code);
             Console.WriteLine(lst.AsJObject());
         }
     }

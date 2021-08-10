@@ -6,7 +6,7 @@ namespace FundLib.Interface
 {
     public interface IFundFindService
     {
-        FundInfo GetFundDetail(string code);
+        FundInfo GetFundInfo(string code);
 
         /// <summary>
         /// 获取基金概况

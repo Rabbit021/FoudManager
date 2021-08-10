@@ -1,7 +1,5 @@
-﻿using System;
-using System.Configuration;
-using System.Threading.Tasks;
-using FundLib.Services;
+﻿using System.Configuration;
+using FundLib.Jobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
@@ -23,21 +21,7 @@ namespace FundLib.Extensions
         {
             config.SchedulerId = "Scheduler-Core";
             config.UseMicrosoftDependencyInjectionJobFactory();
-            config.ScheduleJob<Job>(trigger => trigger.WithCronSchedule("0/10 * * * * ? *"));
-        }
-    }
-
-    public class Job : IJob
-    {
-        public Job(RetrieveService retrieveService)
-        {
-
-        }
-
-        public Task Execute(IJobExecutionContext context)
-        {
-            Console.WriteLine(context.JobDetail.Description);
-            return Task.CompletedTask;
+            config.ScheduleJob<SyncFundInfoJob>(trigger => trigger.WithCronSchedule("0/10 * * * * ? *"));
         }
     }
 }

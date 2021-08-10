@@ -22,7 +22,7 @@ namespace FundLib.Services
             this.mapper = PublicDatas.Resolve<IMapper>();
         }
 
-        public FundInfo GetFundDetail(string code)
+        public FundInfo GetFundInfo(string code)
         {
             try
             {
@@ -32,7 +32,7 @@ namespace FundLib.Services
                 var postion = GetFundMNInverstPosition(code); // 个股持仓
                 var sector = GetFundMNSectorAllocation(code); // 行业持仓
                                                               // 基础数据
-                detail.code = code;
+                detail.fcode = code;
                 detail.name = baseInfo.shortname;
                 detail.ftype = baseInfo.ftype;
                 detail.assets = Math.Round((double)postSummary.nav, 2);

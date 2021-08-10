@@ -23,27 +23,14 @@ namespace FundLib.Services
             _fundDbContext.Initlize();
         }
 
-        public void Save(List<FundInfo> datas)
+        public DbContextBase GetDbContext()
         {
-            var items = mapper.Map<List<FundItem>>(datas);
-
-            var stockItems = new List<StockItem>();
-            foreach (var itr in datas)
-            {
-                var lst = mapper.Map<List<StockItem>>(itr.FundStocks);
-                lst.ForEach(x => { x.fcode = itr.code; });
-                stockItems.AddRange(lst);
-
-
-
-                _fundDbContext.Save(items);
-                var scodes = (stockItems.Select(x => x.fcode).ToArray());
-
-                _fundDbContext.AsDeleteable<StockItem>().Where(x => SqlFunc.ContainsArray(scodes, x.fcode))
-                    .ExecuteCommand();
-                _fundDbContext.InsertRange(stockItems);
-            }
+            return _fundDbContext;
         }
+
+        #region 基础数据表
+
+        #endregion
 
         public List<FundInfo> GetFundList()
         {
@@ -57,15 +44,10 @@ namespace FundLib.Services
             return details;
         }
 
-        public List<StockItem> GetStockItems()
+        public void Save(FundInfo fundInfo)
         {
-            var lst = _fundDbContext.GetList<StockItem>();
-            return lst;
-        }
-
-        public void GetSummary()
-        {
-            _fundDbContext.GetList<StockItem>();
+            var item = mapper.Map<FundItem>(fundInfo);
+            _fundDbContext.Save(new[] { item });
         }
     }
 }

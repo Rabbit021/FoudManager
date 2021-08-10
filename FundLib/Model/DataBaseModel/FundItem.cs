@@ -33,8 +33,7 @@ namespace FundLib.Model.DataBaseModel
         public double? otherPercent { get; set; }
 
         // 重仓比例
-        public double? topPercent { get; set; }
-        public double? bondTopPercent { get; set; }
+        public double topPercent { get; set; }
     }
 
     /// <summary>
