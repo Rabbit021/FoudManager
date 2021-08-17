@@ -39,3 +39,8 @@ plat:Android
 
 ## 特色数据
 https://fundmobapi.eastmoney.com/FundMNewApi/FundMNUniqueInfo
+
+
+## 天天基金 web端
+callback = jQuery183029246185434605976_{timestamp}
+http://api.fund.eastmoney.com/ztjj/GetBKRelTopicFund?callback=jQuery183029246185434605976_1628742664154&sort=SON_1N&sorttype=DESC&pageindex=1&pagesize=10&tp=BK0490&isbuy=1&_=1628742664235

@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using FundLib.Jobs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +23,22 @@ namespace FundLib.Extensions
         {
             config.SchedulerId = "Scheduler-Core";
             config.UseMicrosoftDependencyInjectionJobFactory();
-            config.ScheduleJob<SyncFundInfoJob>(trigger => trigger.WithCronSchedule("0/10 * * * * ? *"));
+            ScheduleJobs(config);
+        }
+
+        public static void ScheduleJobs(IServiceCollectionQuartzConfigurator config)
+        {
+            var lst = new List<Type>();
+            lst.Add(typeof(SyncFundInfoJob));
+
+            foreach (var type in lst)
+            {
+                var jobName = type.Name;
+                var jobKey = new JobKey(jobName);
+                config.AddJob(type, jobKey);
+                config.AddTrigger(opts => opts.ForJob(jobKey).WithIdentity(jobName)
+                    .WithCronSchedule("0/5 * * * * ?"));
+            }
         }
     }
 }

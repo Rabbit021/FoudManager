@@ -186,6 +186,32 @@ namespace FundLib.Services
 
         #endregion
 
+        #region 天天基金Web方法
+
+        public void GetFundListByTheme()
+        {
+            var dict = new Dictionary<string, string>();
+            dict["pageindex"] = "1";
+            dict["pagesize"] = "10";
+            dict["tp"] = "BK0490";
+            var json = GetFromWeb("http://api.fund.eastmoney.com/ztjj/GetBKRelTopicFund", dict);
+        }
+
+        private string GetFromWeb(string address, IDictionary<string, string> dict)
+        {
+            var callback = "callback";
+            dict["callback"] = callback;
+            dict["sort"] = "SON_1N";
+            dict["sorttype"] = "DESC";
+            dict["isbuy"] = "1";
+            var queryString = string.Join('&', dict.Select(x => $"{x.Key}={x.Value}"));
+            var url = $"{address}?{queryString}";
+            var msg = WebManager.Get(url, WebManager.GetHeaders());
+            var json = msg.Replace(callback, "");
+            return json;
+        }
+        #endregion 
+
         #region 基础方法
 
         private T PostTiantianDatas<T>(string path, string code)

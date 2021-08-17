@@ -5,6 +5,10 @@ using Quartz;
 
 namespace FundLib.Jobs
 {
+    /// <summary>
+    /// 同步基金的基本信息
+    /// </summary>
+    [DisallowConcurrentExecution]
     public class SyncFundInfoJob : IJob
     {
         private readonly RetrieveService _retrieveService;
@@ -16,7 +20,6 @@ namespace FundLib.Jobs
         public Task Execute(IJobExecutionContext context)
         {
             _retrieveService.Retrieve();
-            //Console.WriteLine(context.JobDetail.Description);
             return Task.CompletedTask;
         }
     }

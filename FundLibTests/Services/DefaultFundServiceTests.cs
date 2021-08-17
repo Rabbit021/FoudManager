@@ -1,15 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FundLib.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using FundLib.Extensions;
+using FundLib.Services;
 using FundLibTests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FundLib.Services.Tests
 {
     [TestClass()]
-    public class TianTianFundServiceTests : UnitTestBase
+    public class DefaultFundServiceTests : UnitTestBase
     {
         private string code = "000248";
         //private string fcode = "008281";
@@ -92,6 +90,13 @@ namespace FundLib.Services.Tests
             var service = GetService();
             var lst = service.GetFundInfo(code);
             Console.WriteLine(lst.AsJObject());
+        }
+
+        [TestMethod()]
+        public void GetFundListByThemeTest()
+        {
+            var service = GetService();
+            service.GetFundListByTheme();
         }
     }
 }

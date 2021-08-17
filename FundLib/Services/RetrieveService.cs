@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FundLib.Extensions;
+﻿using System.Linq;
 using FundLib.Interface;
 using FundLib.Model.DataBaseModel;
-using FundLib.Model.TianTian;
 
 namespace FundLib.Services
 {
@@ -34,7 +31,6 @@ namespace FundLib.Services
                 var info = fundFindService.GetFundInfo(code);
                 repositoryService.Save(info);
             }
-            //repositoryService.GetFundList();
         }
     }
 }
