@@ -30,6 +30,7 @@ namespace FundLib.Services
         public void Retrieve()
         {
             var codes = repositoryService.GetDbContext().GetList<FundPosition>().Select(x => x.fcode).ToList();
+
             foreach (var code in codes)
             {
                 var info = fundFindService.GetFundInfo(code);
@@ -37,7 +38,6 @@ namespace FundLib.Services
 
                 // 持仓信息
                 var items = info.FundStocks;
-
                 var lst = new List<StockItem>();
                 foreach (var itr in items)
                 {
