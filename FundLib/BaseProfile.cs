@@ -3,6 +3,7 @@ using AutoMapper;
 using FundLib.Model;
 using FundLib.Model.DataBaseModel;
 using FundLib.Model.TianTian;
+using FundInfo = FundLib.Model.DataBaseModel.FundInfo;
 
 namespace FundLib
 {
@@ -27,8 +28,8 @@ namespace FundLib
 
             CreateMap<PercenItem, SummaryItem>();
 
-            CreateMap<FundInfo, FundItem>();
-            CreateMap<FundItem, FundInfo>();
+            CreateMap<Model.FundInfo, FundInfo>();
+            CreateMap<FundInfo, Model.FundInfo>();
 
             CreateMap<PercenItem, StockItem>();
             CreateMap<StockItem, PercenItem>();

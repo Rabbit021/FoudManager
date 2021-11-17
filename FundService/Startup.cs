@@ -21,17 +21,12 @@ namespace FundService
             PublicDatas.Configuration = configuration;
         }
 
-        private void OnStarted()
-        {
-            // TODO 启动任务
-
-        }
-
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddControllers();
             services.AddResponseCaching(options =>
             {
                 options.UseCaseSensitivePaths = false;
@@ -83,6 +78,12 @@ namespace FundService
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new TypeRegister());
+        }
+
+        private void OnStarted()
+        {
+            // TODO 启动任务
+
         }
     }
 }

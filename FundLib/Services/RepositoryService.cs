@@ -5,6 +5,7 @@ using AutoMapper;
 using FundLib.Model;
 using FundLib.Model.DataBaseModel;
 using SqlSugar;
+using FundInfo = FundLib.Model.DataBaseModel.FundInfo;
 
 namespace FundLib.Services
 {
@@ -32,21 +33,9 @@ namespace FundLib.Services
 
         #endregion
 
-        public List<FundInfo> GetFundList()
+        public void Save(Model.FundInfo fundInfo)
         {
-            var items = _fundDbContext.GetList<FundItem>();
-            var details = mapper.Map<List<FundInfo>>(items);
-
-            foreach (var itr in details)
-            {
-                itr.FundStocks = mapper.Map<List<PercenItem>>(_fundDbContext.GetList<StockItem>());
-            }
-            return details;
-        }
-
-        public void Save(FundInfo fundInfo)
-        {
-            var item = mapper.Map<FundItem>(fundInfo);
+            var item = mapper.Map<FundInfo>(fundInfo);
             _fundDbContext.Save(new[] { item });
         }
     }
