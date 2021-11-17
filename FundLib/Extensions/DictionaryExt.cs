@@ -8,6 +8,8 @@ namespace FundLib.Extensions
         public static Dictionary<TKey, TSouce> AsDict<TKey, TSouce>(this IEnumerable<TSouce> list, Func<TSouce, TKey> keyFilter)
         {
             var dict = new Dictionary<TKey, TSouce>();
+            if (list == null)
+                return dict;
             foreach (var souce in list)
             {
                 var key = keyFilter.Invoke(souce);
