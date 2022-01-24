@@ -98,5 +98,14 @@ namespace FundLib.Services.Tests
             var service = GetService();
             service.GetFundListByTheme();
         }
+
+        [TestMethod()]
+        public void PostFundMNFInfoTest()
+        {
+            var service = GetService();
+            var rst = service.PostFundMNFInfo(code);
+            Console.WriteLine(rst.AsJObject());
+            Assert.IsNotNull(rst);
+        }
     }
 }

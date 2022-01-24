@@ -184,6 +184,20 @@ namespace FundLib.Services
             return rst;
         }
 
+        /// <summary>
+        /// 获取基金净值
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public FundMNFInfo PostFundMNFInfo(string code)
+        {
+            var fun = "/FundMNewApi/FundMNFInfo";
+            var paramDict = new Dictionary<string, string>();
+            paramDict.Add("FCODES", code);
+            var rst = PostTiantianDatas<List<FundMNFInfo>>(fun, code, paramDict)?.FirstOrDefault();
+            return rst;
+        }
+
         #endregion
 
         #region 天天基金Web方法
@@ -196,7 +210,6 @@ namespace FundLib.Services
             dict["tp"] = "BK0490";
             var json = GetFromWeb("http://api.fund.eastmoney.com/ztjj/GetBKRelTopicFund", dict);
         }
-
         private string GetFromWeb(string address, IDictionary<string, string> dict)
         {
             var callback = "callback";
@@ -214,12 +227,17 @@ namespace FundLib.Services
 
         #region 基础方法
 
-        private T PostTiantianDatas<T>(string path, string code)
+        private T PostTiantianDatas<T>(string path, string code, Dictionary<string, string> paramDict = null)
         {
             var fundapi = "https://fundmobapi.eastmoney.com";
-
             var dict = GetQueryParamDict();
             dict["FCODE"] = code;
+            if (paramDict != null)
+            {
+                foreach (var itr in paramDict)
+                    dict[itr.Key] = itr.Value;
+            }
+
             var url = $"{fundapi}{path}";
             var json = WebManager.Post(url, dict);
             var rst = json.As<T>("Datas");

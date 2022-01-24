@@ -61,5 +61,12 @@ namespace FundLib.Interface
         /// <param name="code"></param>
         /// <returns></returns>
         FundMNUniqueInfo PostFundMNUniqueInfo(string code);
+
+        /// <summary>
+        /// 获取基金净值
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        FundMNFInfo PostFundMNFInfo(string code);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 
 namespace FundLib.Services
@@ -30,6 +31,7 @@ namespace FundLib.Services
 
         private static HttpClient GetClient(IDictionary<string, string> headers)
         {
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
             var client = factory.CreateClient();
             if (headers != null)
             {

@@ -37,6 +37,11 @@ namespace FundLib
 
             CreateMap<PercenItem, SummaryItem>();
             CreateMap<StockItem, SummaryItem>();
+
+            CreateMap<FundMNFInfo, FundPrice>()
+                .ForMember(x => x.fcode, opt => opt.MapFrom(x => x.FCODE))
+                .ForMember(x => x.price, opt => opt.MapFrom(x => x.NAV))
+                .ForMember(x => x.price_tmp, opt => opt.MapFrom(x => x.GSZ));
         }
     }
 }

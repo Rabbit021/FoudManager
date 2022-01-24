@@ -13,13 +13,14 @@ namespace FundLib.Model.TianTian
 
         public string shortname { get; set; }
         public string ftype { get; set; }
+
         /// <summary>
-        /// 成立时间
+        ///     成立时间
         /// </summary>
         public DateTime estabdate { get; set; }
 
         /// <summary>
-        /// 最新规模
+        ///     最新规模
         /// </summary>
         [JsonConverter(typeof(String2DoubleConverter))]
         public double? endnav { get; set; }
@@ -69,12 +70,12 @@ namespace FundLib.Model.TianTian
     }
 
     /// <summary>
-    /// 基金持仓
+    ///     基金持仓
     /// </summary>
     public class FundMNInverstPosition
     {
         /// <summary>
-        /// 基金持仓
+        ///     基金持仓
         /// </summary>
         public Fundstock[] fundStocks { get; set; }
 
@@ -115,8 +116,10 @@ namespace FundLib.Model.TianTian
     {
         public string hymc { get; set; } // 行业名称
         public string sz { get; set; } // 持仓量
+
         [JsonConverter(typeof(String2DoubleConverter))]
         public double? zjzbl { get; set; } // 持仓比例
+
         public string fsrq { get; set; } // 持仓时间
     }
 
@@ -146,7 +149,7 @@ namespace FundLib.Model.TianTian
     }
 
     /// <summary>
-    /// 涨幅
+    ///     涨幅
     /// </summary>
     public class FundMNPeriodIncrease
     {
@@ -161,7 +164,7 @@ namespace FundLib.Model.TianTian
     }
 
     /// <summary>
-    /// 特色数据
+    ///     特色数据
     /// </summary>
     public class FundMNUniqueInfo
     {
@@ -174,5 +177,30 @@ namespace FundLib.Model.TianTian
         public double? PROFIT_3Y { get; set; }
         public double? PROFIT_6Y { get; set; }
         public double? PROFIT_1N { get; set; }
+    }
+
+    public class FundMNFInfo
+    {
+        /// <summary>
+        ///     基金代码
+        /// </summary>
+        public string FCODE { get; set; }
+
+        /// <summary>
+        ///     单位净值
+        /// </summary>
+        [JsonConverter(typeof(String2DoubleConverter))]
+        public double? NAV { get; set; }
+
+        /// <summary>
+        ///     累计净值
+        /// </summary>
+        [JsonConverter(typeof(String2DoubleConverter))]
+        public double? ACCNAV { get; set; }
+
+        /// <summary>
+        ///     估算净值
+        /// </summary>
+        [JsonConverter(typeof(String2DoubleConverter))] public double? GSZ { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace FundLib.Model.DataBaseModel
         public string fcode { get; set; }
         public double cost { get; set; }
         public double fund_share { get; set; }
+        public double fund_size { get; set; }
+        public double fund_size_tmp { get; set; }
     }
 
     /// <summary>
@@ -38,6 +40,7 @@ namespace FundLib.Model.DataBaseModel
         public double topPercent { get; set; }
     }
 
+
     /// <summary>
     /// 持仓股票详情
     /// </summary>
@@ -53,6 +56,7 @@ namespace FundLib.Model.DataBaseModel
     [SugarTable("fund_price", TableDescription = "基金价格")]
     public class FundPrice : ITableBase
     {
+        [SugarColumn(IsPrimaryKey = true)]
         public string fcode { get; set; }
         public double price { get; set; }
         public double price_tmp { get; set; }

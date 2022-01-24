@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using AutoMapper;
 using FundLib.Interface;
 using FundLib.Model.DataBaseModel;
 
@@ -13,14 +14,15 @@ namespace FundLib.Services
     {
         private readonly IFundFindService fundFindService;
         private readonly FundDbContext _fundDbContext;
-
+        private readonly IMapper mapper;
         private RepositoryService repositoryService;
 
-        public RetrieveService(IFundFindService fundFindService, RepositoryService repositoryService, FundDbContext fundDbContext)
+        public RetrieveService(IFundFindService fundFindService, RepositoryService repositoryService, FundDbContext fundDbContext, IMapper mapper)
         {
             this.fundFindService = fundFindService;
             this.repositoryService = repositoryService;
             _fundDbContext = fundDbContext;
+            this.mapper = mapper;
         }
 
 
@@ -52,6 +54,22 @@ namespace FundLib.Services
                 }
                 _fundDbContext.AsDeleteable<StockItem>().Where(x => x.fcode == code).ExecuteCommand();
                 _fundDbContext.InsertRange(lst);
+            }
+        }
+
+        public void RetrievePrice()
+        {
+            var funds = repositoryService.GetDbContext().GetList<FundPosition>();
+            foreach (var fund in funds)
+            {
+                var info = fundFindService.PostFundMNFInfo(fund.fcode);
+                var data = mapper.Map<FundPrice>(info);
+                repositoryService.SavePrice(data);
+
+                // 更新持仓
+                fund.fund_size = data.price * fund.fund_share;
+                fund.fund_size_tmp = data.price_tmp * fund.fund_share;
+                _fundDbContext.Save(new[] { fund });
             }
         }
     }

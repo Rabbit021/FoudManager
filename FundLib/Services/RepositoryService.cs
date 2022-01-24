@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using FundLib.Model;
 using FundLib.Model.DataBaseModel;
+using FundLib.Model.TianTian;
 using SqlSugar;
 using FundInfo = FundLib.Model.DataBaseModel.FundInfo;
 
@@ -37,6 +38,11 @@ namespace FundLib.Services
         {
             var item = mapper.Map<FundInfo>(fundInfo);
             _fundDbContext.Save(new[] { item });
+        }
+
+        public void SavePrice(FundPrice fundPrice)
+        {
+            _fundDbContext.Save<FundPrice>(new[] { fundPrice });
         }
     }
 }
