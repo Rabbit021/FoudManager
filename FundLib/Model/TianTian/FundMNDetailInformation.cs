@@ -14,12 +14,12 @@ namespace FundLib.Model.TianTian
         public string shortname { get; set; }
         public string ftype { get; set; }
         /// <summary>
-        ///     成立时间
+        /// 成立时间
         /// </summary>
         public DateTime estabdate { get; set; }
 
         /// <summary>
-        ///     最新规模
+        /// 最新规模
         /// </summary>
         [JsonConverter(typeof(String2DoubleConverter))]
         public double? endnav { get; set; }

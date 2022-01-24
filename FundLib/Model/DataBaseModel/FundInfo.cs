@@ -6,7 +6,7 @@ namespace FundLib.Model.DataBaseModel
     /// <summary>
     /// 基金持仓
     /// </summary>
-    [SugarTable("fund_position")]
+    [SugarTable("fund_position", TableDescription = "持有的份额")]
     public class FundPosition : ITableBase
     {
         [SugarColumn(IsPrimaryKey = true)]
@@ -18,7 +18,7 @@ namespace FundLib.Model.DataBaseModel
     /// <summary>
     /// 基金信息
     /// </summary>
-    [SugarTable("fund_info")]
+    [SugarTable("fund_info", TableDescription = "基金信息")]
     public class FundInfo : ITableBase
     {
         [SugarColumn(IsPrimaryKey = true)]
@@ -41,7 +41,7 @@ namespace FundLib.Model.DataBaseModel
     /// <summary>
     /// 持仓股票详情
     /// </summary>
-    [SugarTable("fund_stock_info")]
+    [SugarTable("fund_stock_info", TableDescription = "持仓信息")]
     public class StockItem : ITableBase
     {
         public string fcode { get; set; }
@@ -50,6 +50,13 @@ namespace FundLib.Model.DataBaseModel
         public double? percent { get; set; }
     }
 
+    [SugarTable("fund_price", TableDescription = "基金价格")]
+    public class FundPrice : ITableBase
+    {
+        public string fcode { get; set; }
+        public double price { get; set; }
+        public double price_tmp { get; set; }
+    }
 
     public interface ITableBase
     {
